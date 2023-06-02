@@ -1,0 +1,69 @@
+@relation Network1
+
+@attribute nasal_swab_order {P,A,M}
+@attribute unspecified_cough {P,A,M}
+@attribute reported_fever {P,A,M}
+@attribute influenza_lab_ordered {P,A,M}
+@attribute influenza_like_illness {P,A,M}
+@attribute unspecified_pneumonia {P,A,M}
+@attribute viral_syndrome {P,A,M}
+@attribute myalgia {P,A,M}
+@attribute influenza_lab_positive {P,A,M}
+@attribute hypoxemia {P,A,M}
+@attribute nonproductive_cough {P,A,M}
+@attribute ill_appearing {P,A,M}
+@attribute bronchiolitis {P,A,M}
+@attribute age_group {ls6,ge6ls65,ge65}
+@attribute diagnosis {O,N,I}
+
+@data
+M,M,M,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,M,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,P,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,A,A,M,M,M,M,M,M,M,M,A,M,ge6ls65,O
+M,P,A,M,M,M,M,M,M,M,M,M,M,ge65,O
+M,P,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,M,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,P,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,M,M,M,M,M,M,M,A,M,M,M,ge6ls65,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,A,P,M,M,M,M,M,M,M,M,A,M,ls6,O
+M,M,A,M,M,M,M,M,M,A,M,M,M,ge6ls65,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,M,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,M,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,A,P,M,M,M,M,M,M,M,M,A,M,ge6ls65,O
+M,M,M,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,A,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,M,M,M,M,M,M,M,A,M,M,M,ge65,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge65,O
+M,M,A,M,M,M,M,M,M,A,M,M,M,ge6ls65,O
+M,A,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+P,P,A,M,M,P,M,M,M,A,P,A,M,ls6,O
+M,M,M,M,M,M,M,M,M,M,M,A,M,ge6ls65,O
+M,M,M,M,M,M,M,M,M,M,M,M,M,ge65,O
+M,M,M,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,P,M,M,M,P,M,M,M,M,M,M,ge65,O
+M,M,A,M,M,M,M,M,M,M,M,A,M,ls6,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,M,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,A,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,M,M,M,M,M,M,M,A,M,M,M,ge6ls65,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,A,P,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,A,M,M,M,M,M,M,M,M,A,M,ge65,O
+M,A,A,P,M,P,M,M,M,M,P,A,M,ge6ls65,N
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,M,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,A,P,M,M,P,P,M,M,M,M,M,M,ge6ls65,N
+M,A,A,M,M,M,M,M,M,M,M,M,M,ge6ls65,O
+M,A,P,M,M,M,M,M,M,A,M,M,M,ge65,O
+M,A,A,M,P,M,M,M,M,M,P,M,M,ge6ls65,N
+M,P,P,M,M,A,M,M,M,M,M,M,M,ge6ls65,O

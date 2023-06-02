@@ -1,0 +1,68 @@
+@relation Network1
+
+@attribute unspecified_cough {P,A,M}
+@attribute rsv_lab_ordered {P,A,M}
+@attribute respiratory_distress {P,A,M}
+@attribute reported_fever {P,A,M}
+@attribute respiratory_panel_ordered {P,A,M}
+@attribute tachypnea {P,A,M}
+@attribute highest_measured_temperature {P,A,I,M}
+@attribute hypoxemia {P,A,M}
+@attribute apnea {P,A,M}
+@attribute infiltrate {P,A,M}
+@attribute influenza_lab_positive {P,A,M}
+@attribute nasal_swab_order {P,A,M}
+@attribute age_group {ls6,ge6ls65,ge65}
+@attribute diagnosis {O,N,I}
+
+@data
+A,M,M,M,M,A,I,M,M,M,M,M,ge6ls65,O
+A,M,A,M,M,A,I,A,M,M,M,M,ge65,O
+M,M,M,A,M,A,I,M,M,M,M,M,ge6ls65,O
+P,M,M,M,M,A,I,M,M,M,M,M,ge65,O
+A,M,M,M,M,A,M,A,M,M,M,M,ge6ls65,O
+M,M,M,A,M,A,I,A,M,M,M,M,ge65,O
+P,M,M,M,M,A,I,A,M,M,M,M,ge65,O
+A,M,M,M,M,A,I,A,M,M,M,M,ge6ls65,O
+P,M,P,P,P,A,I,P,M,M,A,M,ls6,I
+M,M,M,M,M,M,M,A,M,M,M,M,ge6ls65,O
+M,M,M,M,M,A,A,A,M,M,M,M,ge65,O
+P,P,P,P,P,P,A,A,M,M,M,M,ls6,N
+M,M,M,M,M,P,I,M,M,M,M,M,ge6ls65,O
+M,M,A,A,M,A,I,A,M,M,M,M,ge6ls65,O
+M,M,M,M,M,A,I,A,M,M,M,M,ge6ls65,O
+M,M,M,M,M,A,I,M,M,M,M,M,ge6ls65,O
+M,M,P,M,M,A,I,P,M,M,M,M,ge6ls65,O
+A,M,A,M,M,A,I,M,M,M,M,M,ge6ls65,O
+P,M,M,M,M,A,I,M,M,M,M,M,ls6,O
+M,M,M,M,M,M,M,A,M,M,M,M,ge6ls65,O
+P,M,A,M,M,A,I,A,M,M,M,M,ge6ls65,O
+M,M,M,M,M,A,M,A,M,M,M,M,ge6ls65,O
+A,M,M,M,M,A,A,M,M,M,M,M,ge6ls65,O
+A,M,A,M,M,A,I,A,M,M,M,M,ge6ls65,O
+M,M,M,M,M,A,I,A,M,M,M,M,ge65,O
+A,M,M,P,M,A,I,A,M,M,M,M,ge6ls65,O
+M,M,M,M,M,A,I,A,M,M,M,M,ls6,O
+M,M,A,P,M,A,I,A,M,M,M,M,ge6ls65,O
+A,M,M,P,M,A,I,A,M,M,M,M,ge6ls65,O
+M,M,M,M,M,A,I,A,M,M,M,M,ge6ls65,O
+M,M,M,A,M,A,I,M,M,M,M,M,ge6ls65,O
+A,M,A,M,M,A,I,M,M,M,M,M,ge6ls65,O
+M,M,M,M,M,A,I,M,M,M,M,M,ge6ls65,O
+A,M,M,M,M,A,I,A,M,M,M,M,ls6,O
+M,M,M,P,M,A,I,P,M,M,M,M,ge6ls65,O
+M,M,M,A,M,A,I,A,M,M,M,M,ge6ls65,O
+M,M,M,M,M,A,I,M,M,M,M,M,ge6ls65,O
+A,M,A,M,M,A,I,A,M,M,M,M,ge6ls65,O
+M,M,M,M,M,A,I,A,M,M,M,M,ls6,O
+M,M,M,A,M,M,M,M,M,M,M,M,ls6,O
+A,M,M,M,M,A,I,A,M,M,M,M,ge65,O
+A,M,M,A,M,A,A,M,M,P,M,M,ge6ls65,O
+M,M,A,M,M,A,I,M,M,M,M,M,ge6ls65,O
+M,M,A,A,M,A,I,A,M,M,M,M,ge6ls65,N
+P,M,P,P,M,A,I,A,M,A,M,M,ge6ls65,I
+M,M,M,M,M,A,I,M,M,M,M,M,ge6ls65,O
+A,M,A,M,M,A,I,A,M,M,M,M,ge6ls65,O
+P,M,M,M,M,A,M,M,M,M,M,M,ge6ls65,O
+M,M,P,A,M,A,I,M,M,M,M,M,ge6ls65,O
+P,P,P,P,P,A,I,P,M,M,A,M,ls6,N

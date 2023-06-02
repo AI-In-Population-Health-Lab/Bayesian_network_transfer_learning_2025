@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <smile version="1.0" id="folder10/000influenza_ac_topazac_slc_topazslc/sourceModel/acmodel_0810_topazac_cleaned.bif">
+	<nodes>
+	<cpt id="diagnosis">
+		<state id="O" />
+		<state id="N" />
+		<state id="I" />
+		<probabilities>0.9338105130000001 0.060890107000000006 0.005299380000000001 </probabilities>
+	</cpt>
+	<cpt id="age_group">
+		<state id="ls6" />
+		<state id="ge6ls65" />
+		<state id="ge65" />
+		<parents>diagnosis </parents>
+		<probabilities>0.0625 0.7375 0.2 0.125 0.8 0.075 0.0625 0.7375 0.2 </probabilities>
+	</cpt>
+	<cpt id="nasal_swab_order">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis age_group </parents>
+		<probabilities>0.005891896507556998 8.538980445734779E-5 0.9940227136879857 0.002293012943205291 2.84257802876689E-4 0.9974227292539181 3.000900270081024E-4 9.002700810243073E-4 0.9987996398919676 0.204221635883905 0.003693931398416886 0.7920844327176781 0.3757455268389662 0.007668276057938086 0.6165861971030957 0.1887072808320951 0.004457652303120356 0.8068350668647846 0.417283950617284 0.01728395061728395 0.5654320987654321 0.5348495964783566 0.003668378576669112 0.4614820249449743 0.1549295774647887 0.01408450704225352 0.8309859154929577 </probabilities>
+	</cpt>
+	<cpt id="unspecified_cough">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis age_group </parents>
+		<probabilities>0.1898215353086842 0.2094611903338741 0.6007172743574417 0.07229623453163789 0.2217779378043927 0.7059258276639694 0.08452535760728218 0.254776432929879 0.6606982094628389 0.6242744063324538 0.1398416886543536 0.23588390501319256 0.5779608065890371 0.23658051689860835 0.18545867651235448 0.4977711738484398 0.2630014858841011 0.2392273402674592 0.6839506172839506 0.08148148148148149 0.2345679012345679 0.7608217168011737 0.11812179016874538 0.12105649303008069 0.5774647887323944 0.1267605633802817 0.2957746478873239 </probabilities>
+	</cpt>
+	<cpt id="reported_fever">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>unspecified_cough diagnosis </parents>
+		<probabilities>0.417695772192358 0.4638965567339823 0.1184076710736597 0.6875879538418238 0.2569659442724459 0.05544610188573037 0.8583025830258303 0.1040590405904059 0.03763837638376383 0.20756750284380052 0.6914326767646531 0.10099982039154641 0.6470588235294118 0.3035294117647059 0.04941176470588235 0.7241379310344828 0.2216748768472907 0.0541871921182266 0.1124953331630347 0.4348313061248551 0.4526733607121102 0.5226011102299762 0.246629659000793 0.2307692307692308 0.5302491103202847 0.1957295373665481 0.2740213523131673 </probabilities>
+	</cpt>
+	<cpt id="influenza_lab_positive">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis nasal_swab_order </parents>
+		<probabilities>0.04663212435233161 0.005181347150259068 0.9481865284974094 0.04 0.04 0.92 1.481301929732423E-4 1.346638117938566E-5 0.9998384034258474 0.04409363091997823 0.001633097441480675 0.9542732716385411 0.08108108108108109 0.02702702702702703 0.8918918918918919 0.00830367734282325 0.001186239620403322 0.9905100830367735 0.29592959295929594 0.0011001100110011003 0.702970297029703 0.2307692307692308 0.2307692307692308 0.5384615384615384 0.138495092693566 0.003271537622682661 0.8582333696837514 </probabilities>
+	</cpt>
+	<cpt id="hypoxemia">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>unspecified_cough diagnosis </parents>
+		<probabilities>0.02019468255121313 0.170710446026442 0.8090948714223449 0.1027300872502111 0.2541514213340839 0.643118491415705 0.05830258302583026 0.2059040590405904 0.7357933579335794 0.006645512782134946 0.131054301622463 0.862300185595402 0.04784313725490196 0.1733333333333333 0.7788235294117647 0.04433497536945813 0.2019704433497537 0.7536945812807881 0.005364406280088817 0.06376373032559784 0.9308718633943134 0.1070578905630452 0.2006344171292625 0.6923076923076923 0.01067615658362989 0.1530249110320285 0.8362989323843416 </probabilities>
+	</cpt>
+	</nodes>
+	<extensions>
+	 <genie version="1.0" app="GeNIe 2.0.2603.0" name="Flu" faultnameformat="nodestate">
+		<node id="nasal_swab_order">
+			<name>nasal_swab_order</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="unspecified_cough">
+			<name>unspecified_cough</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="reported_fever">
+			<name>reported_fever</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="influenza_lab_positive">
+			<name>influenza_lab_positive</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="hypoxemia">
+			<name>hypoxemia</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="age_group">
+			<name>age_group</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="diagnosis">
+			<name>diagnosis</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+	 </genie>
+	</extensions>
+</smile>
