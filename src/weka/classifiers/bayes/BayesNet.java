@@ -183,6 +183,7 @@ public class BayesNet
    * @throws Exception if the classifier has not been generated
    * successfully
    */
+
   public void buildClassifier(Instances instances) throws Exception {
 
     // can classifier handle the data?

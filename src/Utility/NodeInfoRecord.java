@@ -6,7 +6,10 @@ import java.io.Serializable;
  *
  * Feb 17, 2011
  * 1:53:17 PM
+ *
  * @author Kevin V. Bui (kvb2@pitt.edu)
+ *
+ *
  */
 public class NodeInfoRecord implements Serializable{
 

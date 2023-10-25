@@ -386,6 +386,10 @@ public class SMILEBayesNet extends AbstractValueDAG<String,String> implements Mu
      * @return
      */
     public Map<List<String>,Double> probabilities( List<? extends String> nodes, ArrayList<ArrayList<String>> permutationList){
+
+        // node [child, parent1, parent2, parent3.....]
+        // permutation--> combination of different values with child and all parents.
+        // net is source_true_clean_injection model
         final int[]
                 vars = new int[nodes.size()],
                 vals = new int[nodes.size()];
