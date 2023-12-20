@@ -102,9 +102,9 @@ import javax.swing.*;
 public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler {
     /** points to Bayes network for which a structure is searched for **/
     static BayesNet m_BayesNet; //Current target Bayesian network. This one is initiated with source_clean_BayesNet, and will be updated after searching finish.
-    static BayesNet source_BayesNet; //source Bayesian network
-    static BayesNet source_clean_BayesNet; //source Bayesian network after removing unexisting features(for simulation data to get N')
-    static BayesNet source_clean_inject_BayesNet; //This Bayesian network is for Nijk' calculation purpose.
+    static List<BayesNet> source_BayesNet; // change to multi-sources  Bayesian network
+    static List<BayesNet> source_clean_BayesNet; //source Bayesian network after removing unexisting features(for simulation data to get N')
+    static List<BayesNet> source_clean_inject_BayesNet; //This Bayesian network is for Nijk' calculation purpose.
     static HashMap<String,Integer> nameIndexTable;
     static Instances targetInstances;
     static Instances sourceInstances;
@@ -114,15 +114,15 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
     static double trueKL, avgKL;
     static HashMap<String,Double> trueBFWeightTable, avgBFWeightTable;
 
-    static double adjustedPriorSampleSize; // note: see page 18 in thesis, N' can be assessed as the number of observations would have been seen in order to have the same confidence as our prior knowledge.
+    static double[] adjustedPriorSampleSize;
+    //static double adjustedPriorSampleSize; // note: see page 18 in thesis, N' can be assessed as the number of observations would have been seen in order to have the same confidence as our prior knowledge.
     /*** The prior equivalent sample size value, when using BDEu */
-    private int m_SourceSampleSize;
     static HashMap<String,Double> weightTable;
 
     static ArrayList<String> sharedNodeList;
     static String configFileName;
-    static String sourceModelLoc,sourceLearnedModelName,sourceLearnedCleanedModelName, sourceTrueModelName,sourceCleanInjectModelXML,
-            sourceClearnInjectModelXDSL,sourceSimulateDataLoc,sourceSimulateDataName,sourceDataLoc,sourceDataName,sourceDataSize,
+    static String sourceModelLoc,sourceLearnedModelName, sourceTrueModelName,sourceCleanInjectModelXML,
+            sourceClearnInjectModelXDSL,sourceSimulateDataLoc,sourceSimulateDataName,sourceDataLoc,sourceDataName,
             targetModelLoc,targetTrueModelName,targetLearnedModelName,targetFinalModelName, targetDataLoc,targetDataName,targetNodeName,
             targetTestDataName,resultLoc,resultProbName,resultAUCName,resultCalibrationName,
             utilityLoc,temporaryFileName,hashCodeName,logLoc,logName, targetClassName;
@@ -219,10 +219,18 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
     protected int numberOfNodes; //  note: number of features. Each feature is a node, although the node may not be in the Markov Blanket of the target node.
     protected int[][] parents;  // note: parents[i, 0] represents the number of parents of node i
 
-    // multi-version
-    //static SMILEBayesNet  smileNet; //a smile network source clean_inject network
+// multi-version ===============================================================================================================
+    //static SMILEBayesNet  smileNet; a smile network source clean_inject network
     static ArrayList<SMILEBayesNet> smileNet;
+    static ArrayList<String> sourceLearnedCleanedModelName;
+    static ArrayList<String> startNetworkName;
 
+    static ArrayList<String> sourceDataSize;
+
+    private ArrayList<Integer> m_SourceSampleSize;
+
+
+//==============================================================================================================================
     private Tag[] SCORING_METRICS={
             new Tag(0, "K2"),
             new Tag(1, "BDeu"),
@@ -295,9 +303,8 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
     // new BNTL(configFileName,"priorModelApproach", transferLearningWeight,
     // "acmodel_0810_topazac.bif", trueKL, avgKL,avgBFWeightTable)
     public BNTL(String configFile, String scoreMethod, String adjustMethod,
-                String startNetwork,  double trueKL1, HashMap<String,Double> trueBFWeightTable1,
-                double avgKL1, HashMap<String,Double> avgBFWeightTable1,
-                ArrayList<SMILEBayesNet> smileNet) throws Exception {
+                ArrayList<String> startNetwork,  double trueKL1, HashMap<String,Double> trueBFWeightTable1,
+                double avgKL1, HashMap<String,Double> avgBFWeightTable1) throws Exception {
 
         trueKL = trueKL1;
         trueBFWeightTable = trueBFWeightTable1;
@@ -307,8 +314,15 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         avgBFWeightTable = avgBFWeightTable1;
 
         configFileName = configFile;
+
+        startNetworkName = startNetwork;
+
         System.out.println("Configuration File is " + configFileName);
-        System.out.println("Start network is " + startNetwork);
+//        System.out.println("Start network is ");
+//        for(String n: startNetworkName){
+//
+//        }
+
         transferLearningApproach = scoreMethod;
         transferLearningWeight = adjustMethod;
 
@@ -322,13 +336,27 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
 
         useTrueSourceDataForWeight = new Boolean("False");
 
-        targetFinalModelName=startNetwork.replace(".bif","")+"-"+targetDataName.replace(".arff", "")
+        targetFinalModelName=startNetwork.get(0).replace(".bif","")+"-"+targetDataName.replace(".arff", "")
                 + "-"+ transferLearningApproach + "-" + transferLearningWeight + ".bif";
 
-        //this should be source_true_clean
-        sourceLearnedCleanedModelName = startNetwork.replace(".bif", "")+"_cleaned.bif";
+        // find source learned name:
+        sourceLearnedCleanedModelName = new ArrayList<>();
+        for(String a:startNetwork){
+            sourceLearnedCleanedModelName.add(a.replace(".bif", "")+"_cleaned.bif");
+        }
 
-        System.out.println("It was developed with " + sourceDataSize + " instances");
+        int s=0;
+        m_SourceSampleSize = new ArrayList<>();
+        System.out.println();
+        for(String a: sourceDataSize){
+            System.out.println("It was developed with model " +s+ " : "+a + " instances");
+           // add each to list
+            m_SourceSampleSize.add(Integer.parseInt(a));
+            s++;
+
+        }
+
+
         if (scoreMethod.equals("priorModelApproach")){
             m_ScoreMetric=2;
         }
@@ -381,35 +409,39 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
             m_AdjustSourceSampleSizeMetric=21;
         }
 
-
-        source_BayesNet = new BIFReader();
-        try {
-            ((BIFReader) source_BayesNet).processFile(sourceModelLoc+startNetwork);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        // get all source model.
+        //source_BayesNet = new BIFReader();
+        source_BayesNet = new ArrayList<>();
+        for(String net: startNetwork){
+            try {
+                source_BayesNet.add(new BIFReader().processFile(sourceModelLoc + net));
+            }catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
-        m_SourceSampleSize = Integer.parseInt(sourceDataSize);
+
+       // ((BIFReader) source_BayesNet).processFile(sourceModelLoc+startNetwork);
+
+
+
+       // m_SourceSampleSize = Integer.parseInt(sourceDataSize);
+        // modify this code in iteration in instances
+        // line 347
 
         //Later, need to simulate source data, write methods to adjust sample size
-        System.out.println("\n\n==========================ORIGINAL SOURCE MODEL==========================");
-
-        // source_Bayesnet acmodel_0810_topazac.bif
-        // source_true_model
-
+        System.out.println("\n\n==========================SOURCE MODEL Structure==========================");
         // print() ---> print out bayes Network own functions.
-        System.out.println(print(source_BayesNet));
+        for(int i = 0; i<source_BayesNet.size();i++){
+            System.out.println("--------Source_Model "+ i+" ----------------");
+            System.out.println(print(source_BayesNet.get(i)));
+            System.out.println("-Scores-");
+            System.out.println(source_BayesNet.get(i));
+        }
+        System.out.println("============================================================================");
 
-
-        System.out.println("==========");
-        System.out.println(source_BayesNet);
-        System.out.println("done");
-
-        // assign value for multi-version
-        // if list = 1. it is single value.
-        this.smileNet = smileNet;
-
-
+        // initlization for smileNet.
+        smileNet = new ArrayList<>();
 
     } // c'tor
 
@@ -427,7 +459,6 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         // BayesNet with targetTraining Data  bayesNet
 
         targetInstances = targetTrainingData;
-
         System.out.println("\n==========================CLEANING SOURCE MODEL==========================");
         m_BayesNet = bayesNet; //Now, m_BayesNet and bayesNet is empty and m_instances are
 
@@ -446,28 +477,41 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         //	System.out.println(source_BayesNet.graph());
         //remove nodes that do not appear in target data
 
-
-        //source_BayesNet = new BIFReader().processFile("./test/source/combine.bif");
-
+// Part A:
         // delete nodes that do not appears in target training dataset
-        source_clean_BayesNet = cleanSourceBN(source_BayesNet, targetTrainingData);
+        source_clean_BayesNet = new ArrayList<>();
+        for(BayesNet s: source_BayesNet){
+            source_clean_BayesNet.add(cleanSourceBN(s, targetTrainingData));
+        }
+        //source_clean_BayesNet = cleanSourceBN(source_BayesNet, targetTrainingData);
 
+        // record for all source models
+        // just name main model
+        PrintWriter printout = new PrintWriter(new File(sourceModelLoc+sourceLearnedCleanedModelName.get(0)));
 
-        PrintWriter printout = new PrintWriter(new File(sourceModelLoc+sourceLearnedCleanedModelName));
-        printout.println(source_clean_BayesNet.graph());
+        int count = 1;
+        for(BayesNet c: source_clean_BayesNet){
+            printout.println("Model: "+count+"  --------");
+            printout.println(c.graph());
+            count++;
+        }
         printout.flush();
         printout.close();
 
         /// add source_clean nodes to list
-        getSharedList(source_clean_BayesNet);
+        // since the first model is main, I will just use this as main model to save nodes.
+        getSharedList(source_clean_BayesNet.get(0));
 //
 
 
-
-
         //inject target specific features and add dummy links between these features and the class
-        // source_clean_inject saved as xdsl format for smile net
-        source_clean_inject_BayesNet = injectTargetSpecificFeature(source_clean_BayesNet, targetTrainingData);
+        //source_clean_inject saved as xdsl format for smile net
+        // read xdsl into smile net
+        source_clean_inject_BayesNet = new ArrayList<>();
+        for(int i =0; i< source_clean_BayesNet.size();i++){
+            source_clean_inject_BayesNet.add(injectTargetSpecificFeature(source_clean_BayesNet.get(i), targetTrainingData, i));
+        }
+
 
 
         //Network net = new Network(); // p()--> p.23 xi =k
@@ -490,7 +534,13 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
 
 
         //adjustedPriorSampleSize = weight * m_SourceSampleSize;
-        adjustSourceSampleSize();
+        // in order to calculate multi-sources
+        // initialize the adjustPriorSample
+        adjustedPriorSampleSize = new double[m_SourceSampleSize.size()];
+
+        for(int i = 0; i<m_SourceSampleSize.size();i++){
+            adjustSourceSampleSize(i);
+        }
 
         //14
         targetNode = targetInstances.numAttributes();
@@ -522,8 +572,8 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
 
         initVariables();
 
-        // source_true_clean_model
-        updateParents(source_clean_BayesNet);
+        // source_clean_model
+        updateParents(source_clean_BayesNet.get(0));
 
 
         System.out.println("\n\n==========================CLEANED SOURCE MODEL==========================");
@@ -548,28 +598,28 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
 
         if (m_AdjustSourceSampleSizeMetric==0){
             System.out.println("Adjust method: unadjust");
-            System.out.println("source sample:"+ adjustedPriorSampleSize);
+            System.out.println("source sample:"+ adjustedPriorSampleSize[0]);
         }
         else if (m_AdjustSourceSampleSizeMetric==1){
             System.out.println("Adjust method: ratio");
-            System.out.println("adjusted source sample:"+ adjustedPriorSampleSize);
+            System.out.println("adjusted source sample:"+ adjustedPriorSampleSize[0]);
         }
         else if (m_AdjustSourceSampleSizeMetric==2){
             System.out.println("Adjust method: KL");
-            System.out.println("adjusted source sample:"+ adjustedPriorSampleSize);
+            System.out.println("adjusted source sample:"+ adjustedPriorSampleSize[0]);
         }
         else if (m_AdjustSourceSampleSizeMetric==4){
             System.out.println("Adjust method: new KL using target data and learned source model");
-            System.out.println("adjusted source sample:"+ adjustedPriorSampleSize);
+            System.out.println("adjusted source sample:"+ adjustedPriorSampleSize[0]);
         }
         else if (m_AdjustSourceSampleSizeMetric==5){
             System.out.println("Adjust method: new KL using target data and true source model");
-            System.out.println("adjusted source sample:"+ adjustedPriorSampleSize);
+            System.out.println("adjusted source sample:"+ adjustedPriorSampleSize[0]);
         }
         else if (m_AdjustSourceSampleSizeMetric==20){
             System.out.println("Adjust method: adjust new KL using target data and true source model,"
                     + " divided by target data size");
-            System.out.println("adjusted source sample:"+ adjustedPriorSampleSize);
+            System.out.println("adjusted source sample:"+ adjustedPriorSampleSize[0]);
         }
         else if (m_AdjustSourceSampleSizeMetric==21){
             System.out.println("Adjust method: adjust new KL using target data and learned source model"
@@ -582,7 +632,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
             System.out.println("adjusted source sample:");
             for (int i=0; i<sharedNodeList.size(); i++){
                 String key = sharedNodeList.get(i);
-                System.out.println(key+","+weightTable.get(key)*m_SourceSampleSize);
+                System.out.println(key+","+weightTable.get(key)*m_SourceSampleSize.get(0));
             }
         }
         else if (m_AdjustSourceSampleSizeMetric==6){
@@ -590,7 +640,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
             System.out.println("adjusted source sample:");
             for (int i=0; i<sharedNodeList.size(); i++){
                 String key = sharedNodeList.get(i);
-                System.out.println(key+","+weightTable.get(key)*m_SourceSampleSize);
+                System.out.println(key+","+weightTable.get(key)*m_SourceSampleSize.get(0));
             }
         }
         else if (m_AdjustSourceSampleSizeMetric==7){
@@ -598,7 +648,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
             System.out.println("adjusted source sample:");
             for (int i=0; i<sharedNodeList.size(); i++){
                 String key = sharedNodeList.get(i);
-                System.out.println(key+","+weightTable.get(key)*m_SourceSampleSize);
+                System.out.println(key+","+weightTable.get(key)*m_SourceSampleSize.get(0));
             }
         }
 
@@ -733,7 +783,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
 
         //if (getScoreMetric().getSelectedTag().getIDStr().equals("0")) {  // K2 scoring measure
         if (m_ScoreMetric==1) {  // BDeu scoring measure
-            a = m_SourceSampleSize / numberOfJointStates(node);
+            a = m_SourceSampleSize.get(0) / numberOfJointStates(node);
             b = a * (double) nodeDimension[node];
         }
 
@@ -747,11 +797,11 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
             }
             else if (m_ScoreMetric==2 & sharedNodeList.contains(nodeName)) {
                 //	System.out.println("derive node prob using prior model and target data");
-                double tempAdjustPriorSampleSize = adjustedPriorSampleSize;
+                double tempAdjustPriorSampleSize = adjustedPriorSampleSize[0];
 
                 if (m_AdjustSourceSampleSizeMetric == 3 | m_AdjustSourceSampleSizeMetric == 6 | m_AdjustSourceSampleSizeMetric == 7){
                     //if it is shared feature, then pesudocount is weighted by bayes factor
-                    tempAdjustPriorSampleSize = weightTable.get(nodeName) * adjustedPriorSampleSize;
+                    tempAdjustPriorSampleSize = weightTable.get(nodeName) * adjustedPriorSampleSize[0];
                     //	System.out.println("tempSampleSizeFor " + nodeName + tempAdjustPriorSampleSize)
                 }
                 //
@@ -810,7 +860,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         double b=(double) nodeDimension[node];
         //if (getScoreMetric().getSelectedTag().getIDStr().equals("0")) { //K2 is selected
         if (m_ScoreMetric==1){
-            a = m_SourceSampleSize / numberOfJointStates(node);
+            a = m_SourceSampleSize.get(0) / numberOfJointStates(node);
             b = a * (double) nodeDimension[node];
         }
         String nodeName = nodeInfo[node].name;
@@ -830,11 +880,11 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
                 }
                 else if (m_ScoreMetric==2 && sharedNodeList.contains(nodeName)) {
                     //for other m_AdjustSourceSampleSizeMetric method
-                    double tempAdjustPriorSampleSize = adjustedPriorSampleSize;
+                    double tempAdjustPriorSampleSize = adjustedPriorSampleSize[0];
 
                     if (m_AdjustSourceSampleSizeMetric == 3 | m_AdjustSourceSampleSizeMetric == 6 | m_AdjustSourceSampleSizeMetric == 7){
                         //if it is shared feature, then pesudocount is weighted by bayes factor
-                        tempAdjustPriorSampleSize = weightTable.get(nodeName) * adjustedPriorSampleSize;
+                        tempAdjustPriorSampleSize = weightTable.get(nodeName) * adjustedPriorSampleSize[0];
                         //System.out.println("tempSampleSizeFor " + nodeName + tempAdjustPriorSampleSize);
                     }
                     //casei,  child_node,
@@ -858,11 +908,19 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         sourceModelLoc=Utility.getConfig("sourceModelLoc",configFileName);
         sourceDataLoc=Utility.getConfig("sourceDataLoc",configFileName);
         sourceDataName=Utility.getConfig("sourceDataName",configFileName);
-        sourceDataSize=Utility.getConfig("sourceDataSize",configFileName);
-        sourceTrueModelName=Utility.getConfig("sourceTrueModelName",configFileName);
-        sourceCleanInjectModelXML=Utility.getConfig("sourceCleanInjectModelXML",configFileName);
-        sourceLearnedModelName=sourceDataName.replace(".arff", "-" + featureSelectionApproach + "-" + modelLearningApproach + ".bif");
-        sourceLearnedCleanedModelName = sourceLearnedModelName.replace(".bif", "")+"_cleaned.bif";
+
+        // multi-version
+        String dataSource =Utility.getConfig("sourceDataSize",configFileName);
+        String[] dataSize = dataSource.split(",");
+        sourceDataSize = new ArrayList<>();
+        for(String d: dataSize)
+            sourceDataSize.add(d);
+
+
+        //sourceTrueModelName=Utility.getConfig("sourceTrueModelName",configFileName);
+        //sourceCleanInjectModelXML=Utility.getConfig("sourceCleanInjectModelXML",configFileName);
+        //sourceLearnedModelName=sourceDataName.replace(".arff", "-" + featureSelectionApproach + "-" + modelLearningApproach + ".bif");
+        //sourceLearnedCleanedModelName = sourceLearnedModelName.replace(".bif", "")+"_cleaned.bif";
         //sourceTrueCleanedModelName = sourceTrueModelName.replace(".bif", "")+"_cleaned.bif";
         //sourceSimulateDataLoc=Utility.getConfig("sourceSimulateDataLoc",configFileName);
         //sourceSimulateDataName=Utility.getConfig("sourceSimulateDataName",configFileName);
@@ -963,7 +1021,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
             klPart();
     }
 
-    public void adjustSourceSampleSize() throws Exception {
+    public void adjustSourceSampleSize(int num) throws Exception {
         double weight = 1.0;
         if (m_AdjustSourceSampleSizeMetric == 0){
             weight = 1.0;
@@ -973,8 +1031,8 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
             int targetSampleSize = targetInstances.numInstances();
             //	System.out.println("target size: " + targetSampleSize);
             //	System.out.println("source size: " + m_SourceSampleSize);
-            if (targetSampleSize < m_SourceSampleSize){
-                weight = 1.0* targetSampleSize / m_SourceSampleSize;
+            if (targetSampleSize < m_SourceSampleSize.get(num)){
+                weight = 1.0* targetSampleSize / m_SourceSampleSize.get(num);
             }
             else weight = 1.0;
         }
@@ -1065,7 +1123,8 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
             }
             System.out.println("Saved weightTable, but did not change adjustedPriorSampleSize here for individual node!");
         }
-        adjustedPriorSampleSize = weight * m_SourceSampleSize;
+        // put multi-source into an array.
+        adjustedPriorSampleSize[num] = weight * m_SourceSampleSize.get(num);
     }
 
 
@@ -1137,7 +1196,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
                         //for other m_AdjustSourceSampleSizeMetric approach
                         double thePesudoCount = 0.0;
                         for (int z=0; z<smileNet.size(); z++){
-                            thePesudoCount = thePesudoCount + adjustedPriorSampleSize*priorProbTableList.get(z).get(oneParentConfig);
+                            thePesudoCount = thePesudoCount + adjustedPriorSampleSize[z]*priorProbTableList.get(z).get(oneParentConfig);
                         }
 
                         if (m_AdjustSourceSampleSizeMetric==3 | m_AdjustSourceSampleSizeMetric==6 | m_AdjustSourceSampleSizeMetric==7){
@@ -1400,10 +1459,11 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
      * inject target specific features into a bayesnetwork, use prevalence in target data as prob.
      * @param bayesNet
      * @param data
+     * @param count for how many source models
      * @return
      * @throws Exception
      */
-    public BayesNet injectTargetSpecificFeature(BayesNet bayesNet, Instances data) throws Exception{
+    public BayesNet injectTargetSpecificFeature(BayesNet bayesNet, Instances data, int count) throws Exception{
         // bayes Network,   source_true_clean_model
         // create temp.xml
         System.out.println("------Injecting target specific features");
@@ -1462,12 +1522,21 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         }
 
         // xml to xdsl
-        PrintWriter printout2 = new PrintWriter(new File(sourceModelLoc+sourceCleanInjectModelXML));
+        PrintWriter printout2 = new PrintWriter(new File(sourceModelLoc+startNetworkName.get(count)));
         printout2.println(tempNet.graph());
         printout2.flush(); printout2.close();
         ConvertBIFtoGENIE conv = new ConvertBIFtoGENIE();
-        conv.runner(sourceModelLoc+sourceCleanInjectModelXML, "", utilityLoc+hashCodeName, "xdsl");
+        conv.runner(sourceModelLoc+startNetworkName.get(count), "", utilityLoc+hashCodeName, "xdsl");
 
+        // add xdsl to the smile list for computation
+        Network net = new Network();
+        //Influenza_Source_clean_inject.xml
+        //net.readFile(sourceModelLoc+"Influenza_Source_clean_inject.xdsl");
+        net.readFile(sourceModelLoc+startNetworkName.get(count).replace(".bif", ".xdsl"));
+        boolean convertIDs = false;
+        SMILEBayesNet network = new SMILEBayesNet(net, convertIDs);
+
+        smileNet.add(network);
         return tempNet;
     }
 
@@ -1554,7 +1623,6 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         // store child's value
         double[] k = new double[nodeDimension[node]+1]; //an array to save Nijk '
 //===============================
-        double[] k2 = new double[nodeDimension[node]+1];
 //----------------------
         double v=0.0; //Nij
 
@@ -1703,7 +1771,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
 //	    	System.out.println();
 
 //-----------John Note------------------------------------------------//
-        // smileNet is the source_true_clean_inject model
+        // smileNet is the source_clean_inject model
         // provide a child--->parent1,  chilre---->parent2  structure.
         // in a pre_structure framework.
         Map<List<String>,Double> conditionalProbs = netWork.probabilities(nodeNameList, pertumationList);
@@ -1733,14 +1801,14 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
 //	    	System.out.println("****current candidate:");
 //	    	System.out.println(printArray(convertedModel));
 //	    	System.out.println(source_clean_BayesNet);
-        double k = 1.0/(1+ adjustedPriorSampleSize);
+        double k = 1.0/(1+ adjustedPriorSampleSize[0]);
         int sizeParentDiff = 0;
         //	System.out.println("m_PriorEquivalentSampleSize "+m_PriorEquivalentSampleSize);
         //Save names of nodes in source_clean_BayesNet
         ArrayList<String> nodesInSourceClean = new ArrayList<String>();
         //For source_clean_BayesNet, this table saves a node's name and its index
         HashMap<String,Integer> sourceNodesNameIndexTable = new HashMap<String,Integer>();
-        Instances sourceCleanInstances = source_clean_BayesNet.m_Instances;
+        Instances sourceCleanInstances = source_clean_BayesNet.get(0).m_Instances;
         for (int jNode=0; jNode<sourceCleanInstances.numAttributes(); jNode++){
             String jNodeName = sourceCleanInstances.attribute(jNode).name();
             nodesInSourceClean.add(jNodeName);
@@ -1758,7 +1826,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
                 List<String> parentSetInSource = new ArrayList<String>();
                 int iNodeIndexInSource = sourceNodesNameIndexTable.get(iNodeName);
                 //		System.out.println(iNodeIndexInSource+"");
-                ParentSet temp = source_clean_BayesNet.getParentSet(iNodeIndexInSource);
+                ParentSet temp = source_clean_BayesNet.get(0).getParentSet(iNodeIndexInSource);
                 //		System.out.println("number of parents:"+temp.getNrOfParents());
                 int[] parentsInSourceClean = temp.getParents();
                 //		System.out.println("parents in source clean:");
@@ -1793,7 +1861,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
                 //if it is shared feature, then pesudocount is weighted by bayes factor
                 {
                     if (sharedNodeList.contains(iNodeName)) {
-                        double k_Nodei = 1.0/(1+ adjustedPriorSampleSize*weightTable.get(iNodeName));
+                        double k_Nodei = 1.0/(1+ adjustedPriorSampleSize[0]*weightTable.get(iNodeName));
                         //System.out.println("iNodeName " + thePesudoCount);
                         logStructureScore = logStructureScore + sizeParentDiff_Nodei * Math.log(k_Nodei);
                         //	System.out.println(iNodeName + " k_Nodei " + k_Nodei);
@@ -1821,14 +1889,14 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
 //	    	System.out.println("****current candidate:");
 //	    	System.out.println(printArray(convertedModel));
 //	    	System.out.println(source_clean_BayesNet);
-        double k = 1.0/(1+ adjustedPriorSampleSize);
+        double k = 1.0/(1+ adjustedPriorSampleSize[0]);
         //	System.out.println("m_PriorEquivalentSampleSize "+m_PriorEquivalentSampleSize);
         int sizeParentDiff = 0;
         //Save names of nodes in source_clean_BayesNet
         ArrayList<String> nodesInSourceClean = new ArrayList<String>();
         //For source_clean_BayesNet, this table saves a node's name and its index
         HashMap<String,Integer> sourceNodesNameIndexTable = new HashMap<String,Integer>();
-        Instances sourceCleanInstances = source_clean_BayesNet.m_Instances;
+        Instances sourceCleanInstances = source_clean_BayesNet.get(0).m_Instances;
         for (int jNode=0; jNode<sourceCleanInstances.numAttributes(); jNode++){
             String jNodeName = sourceCleanInstances.attribute(jNode).name();
             nodesInSourceClean.add(jNodeName);
@@ -1842,7 +1910,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
                 List<String> parentSetInSource = new ArrayList<String>();
                 int iNodeIndexInSource = sourceNodesNameIndexTable.get(iNodeName);
                 //		System.out.println(iNodeIndexInSource+"");
-                ParentSet temp = source_clean_BayesNet.getParentSet(iNodeIndexInSource);
+                ParentSet temp = source_clean_BayesNet.get(0).getParentSet(iNodeIndexInSource);
                 //		System.out.println("number of parents:"+temp.getNrOfParents());
                 int[] parentsInSourceClean = temp.getParents();
                 //		System.out.println("parents in source clean:");
@@ -3925,14 +3993,14 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         System.out.println("****current candidate:");
         System.out.println(printArray(parents));
 //	    	System.out.println(source_clean_BayesNet);
-        double k = 1.0/(1+ adjustedPriorSampleSize);
+        double k = 1.0/(1+ adjustedPriorSampleSize[0]);
         //	System.out.println("m_PriorEquivalentSampleSize "+m_PriorEquivalentSampleSize);
         int sizeParentDiff = 0;
         //Save names of nodes in source_clean_BayesNet
         ArrayList<String> nodesInSourceClean = new ArrayList<String>();
         //For source_clean_BayesNet, this table saves a node's name and its index
         HashMap<String,Integer> sourceNodesNameIndexTable = new HashMap<String,Integer>();
-        Instances sourceCleanInstances = source_clean_BayesNet.m_Instances;
+        Instances sourceCleanInstances = source_clean_BayesNet.get(0).m_Instances;
         for (int jNode=0; jNode<sourceCleanInstances.numAttributes(); jNode++){
             String jNodeName = sourceCleanInstances.attribute(jNode).name();
             nodesInSourceClean.add(jNodeName);
@@ -3946,7 +4014,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
                 List<String> parentSetInSource = new ArrayList<String>();
                 int iNodeIndexInSource = sourceNodesNameIndexTable.get(iNodeName);
                 //		System.out.println(iNodeIndexInSource+"");
-                ParentSet temp = source_clean_BayesNet.getParentSet(iNodeIndexInSource);
+                ParentSet temp = source_clean_BayesNet.get(0).getParentSet(iNodeIndexInSource);
                 //		System.out.println("number of parents:"+temp.getNrOfParents());
                 int[] parentsInSourceClean = temp.getParents();
                 //		System.out.println("parents in source clean:");
@@ -3995,7 +4063,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         setExpectedParentsOfTarget(predictors);
         setMaxNrOfParents(max_parents);
         setMaxNrOfChildren(max_children);
-        source_BayesNet = new BIFReader();
+        //source_BayesNet = new BIFReader();
         try {
             ((BIFReader) source_BayesNet).processFile(sourceModelFile);
         } catch (Exception e) {
@@ -4021,16 +4089,16 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         setExpectedParentsOfTarget(predictors);
         setMaxNrOfParents(max_parents);
         setMaxNrOfChildren(max_children);
-        source_BayesNet = new BIFReader();
+        //source_BayesNet = new BIFReader();
         try {
             ((BIFReader) source_BayesNet).processFile(sourceModelFile);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        m_SourceSampleSize = sourceSize;
+        //m_SourceSampleSize = sourceSize;
         System.out.println("********************Original source model:");
-        System.out.println(print(source_BayesNet));
+       // System.out.println(print(source_BayesNet));
         System.out.println(source_BayesNet);
 
     } // c'tor

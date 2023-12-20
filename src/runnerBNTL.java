@@ -34,9 +34,9 @@ public class runnerBNTL {
 //====Constant ================
     static String configFileName;
 
-    static String sourceModelLoc,sourceLearnedModelName,sourceLearnedCleanedModelName, sourceTrueModelName,
+    static String sourceModelLoc,sourceLearnedCleanedModelName, sourceTrueModelName,
             sourceTrueCleanedModelName, sourceCleanInjectModelXML,
-            sourceSimulateDataLoc,sourceSimulateDataName,sourceDataLoc,sourceDataName,sourceDataSize,
+            sourceSimulateDataLoc,sourceSimulateDataName,sourceDataLoc,sourceDataName,
             targetModelLoc,targetTrueModelName,targetLearnedModelName, targetDataLoc,targetDataName,targetNodeName,
             targetTestDataName,resultLoc,resultProbName,resultAUCName,resultCalibrationName,
             utilityLoc,temporaryFileName,hashCodeName,logLoc,logName, targetClassName;
@@ -63,8 +63,9 @@ public class runnerBNTL {
 
 
 // multiple version
-    static ArrayList<String> sourceClearnInjectModelXDSL;
-
+    //static ArrayList<String> sourceClearnInjectModelXDSL;
+    static ArrayList<String> sourceLearnedModelName;
+    static ArrayList<String> sourceDataSize;
 
 //------------------------------ Main Function ---------------------------------------//
     /*
@@ -72,43 +73,6 @@ public class runnerBNTL {
     public static void main(String[] args) throws Exception {
         // TODO Auto-generated method stub
 
-//        new smile.License("SMILE LICENSE d918bddd 871cb16c 3d01a731 " +
-//                        "THIS IS AN ACADEMIC LICENSE AND CAN BE USED " +
-//                        "SOLELY FOR ACADEMIC RESEARCH AND TEACHING, " +
-//                        "AS DEFINED IN THE BAYESFUSION ACADEMIC " +
-//                        "SOFTWARE LICENSING AGREEMENT. " +
-//                        "Serial #: 75ivcaomfx4xfthy077ica6bx " +
-//                        "Issued for: Ye Ye (yeyewy@gmail.com) " +
-//                        "Academic institution: University of Pittsburgh " +
-//                        "Valid until: 2023-09-29 " +
-//                        "Issued by BayesFusion activation server",
-//                new byte[] {103,99,55,-38,-42,24,-11,-31,17,-23,-92,-121,-45,-108,-70,90,
-//                        -123,-7,91,-2,-11,-51,-108,-44,-35,33,93,-11,-53,-72,31,-15,
-//                        23,43,-31,-65,81,101,47,-123,95,-40,-4,-101,90,98,-101,-11,
-//                        -27,49,-121,-38,-92,-97,73,39,-70,-40,95,-21,13,-111,-83,-98}
-//        );
-
-        new smile.License(
-                "SMILE LICENSE 27423093 79d0cdab 41c62a7f " +
-                        "THIS IS AN ACADEMIC LICENSE AND CAN BE USED " +
-                        "SOLELY FOR ACADEMIC RESEARCH AND TEACHING, " +
-                        "AS DEFINED IN THE BAYESFUSION ACADEMIC " +
-                        "SOFTWARE LICENSING AGREEMENT. " +
-                        "Serial #: bz8ak08a5jf2cmdzl2lsvk77y " +
-                        "Issued for: Cat (johncxsong@gmail.com) " +
-                        "Academic institution: University of Pittsburgh " +
-                        "Valid until: 2024-04-27 " +
-                        "Issued by BayesFusion activation server",
-                new byte[] {
-                        -99,103,-1,87,104,78,-4,-78,47,-101,-95,-57,-27,-47,-11,21,
-                        -27,0,-6,67,-98,79,-8,-23,-105,-123,34,83,-127,-47,73,11,
-                        -117,39,-13,-90,-46,76,-115,-124,-114,-39,-108,23,-57,67,87,54,
-                        -109,-25,114,61,45,113,-36,-21,25,-61,56,-80,-126,-123,58,40
-                }
-        );
-
-
-        // [filepath, configurationFile, on/off, unadjust,ratio,on/off ]
         System.out.println("=====================================BNTL Project=========================================================");
         System.out.println("This project created the Bayesian Network Transfer Learning (BN-TL) algorithm to re-use of source model, " +
                 "\nsuch as influenza, learned from electronic medical record (EMR) data to predict the target data set. " +
@@ -118,29 +82,34 @@ public class runnerBNTL {
         System.out.println();
 
 
-        if(args.length!= 5){
+        if(args.length!= 6){
             System.out.println("-----------------------------------Instruction-----------------------------------------------------------");
             System.out.println("Please check the input parameters: [file_path] [configuration_file] [unadjust] [ratio] [on/off]");
             System.out.println();
-            System.out.println("[Parameter 1: file_path] [Parameter 2: configuration_file]\n" +
+            System.out.println("[Parameter 0: Smile License_file_path]\n" +
+                    "[Parameter 1: file_path] [Parameter 2: configuration_file]\n" +
                     "[Parameter 3: unadjust weight] [Parameter 4: ratio weight]\n" +
                     "[Parameter 5: KL weight method: on/off]---> to perform this. You must have KL number in your configuration file");
             System.out.println();
             System.out.println("For instance: ");
-            System.out.println("java -Djava.library.path=[smile_path] -jar xxxx.jar file_path config_file unadjust raito off");
+            System.out.println("java -Djava.library.path=[smile_path] -jar xxxx.jar smile_license_path file_path config_file unadjust raito off");
             System.out.println("--------------------------------------------------------------------------------------------------------");
 
             return;
         }
 
-
-        String filePath= args[0];
-        String configurationFile = args[1];
+        String filePath= args[1];
+        String configurationFile = args[2];
 
         // transformed learning package
-        String unadjust = args[2];
-        String ratio = args[3];
-        String KL = args[4];
+        String unadjust = args[3];
+        String ratio = args[4];
+        String KL = args[5];
+
+      // smile
+      String smilePath = args[0];
+      smileRead(smilePath);
+
 
         // Experiment folder
 //=======================================================================================================================
@@ -150,7 +119,7 @@ public class runnerBNTL {
         //path for jar
         String folderExperimentLoc = filePath;
         String fileName = configurationFile;
-        // /Users/johnsong/documents/ye_lab/bayesnet_tranforming/000influenza_ac_topazac_slc_topazslc
+        // /Users/johnsong/documents/ye_lab/bayesnet_tranforming/000infleuenza_ac_topazac_slc_topazslc
 
 
        //String fileName = "folder10_Influenza_CFS_acmodel_0810_topazac_size50_slcmodel_0810_topazslc.bif_targetDataSize_1000-IG";
@@ -161,6 +130,51 @@ public class runnerBNTL {
         String configLoc = new String(folderExperimentLoc+"/utility/");
         runOneConfig(configLoc,fileName,unadjust,ratio,KL);
 
+    }
+
+    public static void smileRead(String path) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(path));
+        String line = "";
+        String text = "";
+        String arr ="";
+        while((line= br.readLine())!= null){
+            // extract the text
+            if(line.equals("new smile.License(")){
+                while(true){
+                    line = br.readLine();
+                    if(line.contains("new byte[]")) {
+                        break;}
+                    else{
+                        String [] a = line.split("\"");
+                        text += a[1];
+                    }
+                }
+            }
+
+            // extract byte
+            if(line.contains("new byte[]")){
+                while(true){
+                    line = br.readLine();
+
+                    if(line.contains("}")){
+                        break;
+                    }else {
+                        arr +=line.trim();
+                    }
+                }
+            }
+
+        }
+
+        // array
+        String [] a = arr.split(",");
+        byte [] code = new byte[a.length];
+
+        for(int i =0; i<a.length; i++){
+            code[i] = Byte.parseByte(a[i]);
+        }
+
+        new smile.License(text,code);
     }
 
 
@@ -174,18 +188,6 @@ public class runnerBNTL {
 
         nothingFunction(configLoc,fileName, KL);
        //------------ ----------------------------
-
-//========================Based Line performance===================//
-    /*     1. Based Line performance:
-          Four categories:
-            1. target_True_model &  target test DataSet
-            2. target_Learn_model & target test DataSet
-
-            3. source_clean_true model[delete nodes that do not appear in target DataSet] & target test DataSet
-            4. source_clean_Learn model & target test DataSet
-    */
-
-
 
 //==========================Start to Run model==========================================//
      /* 2. transform learning performance:
@@ -239,46 +241,33 @@ public class runnerBNTL {
             //slcmodel_0810_topazslc_seed1191167696_size1000.arff
             instances = filtedData;
 
-            //acmodel_0810_topazac_seed-665150065_size50-IG-K2.bif
-            System.out.println("Source model is: " + sourceLearnedModelName);
-
+            //acmodel_0810_topazac_seed-665150065_size50-IG-K2.bif, 2.bif, 3.bif...
+            // print out the source_models
+            // printOutAUC give record to log.
+            printSourceModels();
             System.out.println("Target training data is: " + targetDataName);
-
             System.out.println("===================Transformation ==========================");
-
             transferLearningApproach = new String("priorModelApproach");
 
 // run source_clean_model experiment
             //===== start  source_learned_model  &  Target Training Data=============================================================================//
 
-            // start search from learned source model
-            String startNetworkName = sourceLearnedModelName;
-            printoutAUC.println("startNetworkName:" + startNetworkName);
-
-            // multiple-version
-            // if netWorkList = 1. it is single source model
-            // if networkList >1, it is multi-source model
-            ArrayList<SMILEBayesNet>  netWorkList = readNetwork();
-
-
-
-// 3. unadjuested
-
+// start search from learned source model
             if(unAdjust.equals("unadjust")){
-                unadjust(instances,startNetworkName,netWorkList);
+                unadjust(instances,sourceLearnedModelName);
             }
 
             if(ratio.equals("ratio")){
-                ratio(instances,startNetworkName,netWorkList);
+                ratio(instances,sourceLearnedModelName);
             }
 
             if(KL.equals("on")){
                 // 5. trueBayesFactor
-                trueBayesFactor(instances,startNetworkName,netWorkList);
+                trueBayesFactor(instances,sourceLearnedModelName);
                 // 1. KL_targetData_learnedSourceModel
-                KL_targetData_learnedSourceModel(instances,startNetworkName,netWorkList);
-// 2. nodeKLTable_targetData_learnedSourceModel
-                nodeKLTable_targetData_learnedSourceModel(instances,startNetworkName,netWorkList);
+                KL_targetData_learnedSourceModel(instances,sourceLearnedModelName);
+                // 2. nodeKLTable_targetData_learnedSourceModel
+                nodeKLTable_targetData_learnedSourceModel(instances,sourceLearnedModelName);
 
             }
 
@@ -292,27 +281,38 @@ public class runnerBNTL {
         }
     }
 
+    public static void printSourceModels(){
+        System.out.println("Source model is:  ");
+        printoutAUC.println("startNetworkName: ");
+        int i = 0;
+        for(String a: sourceLearnedModelName){
+            System.out.println("The model "+i+": "+a);
+            printoutAUC.println(a);
+            i++;
+        }
+    }
+
     // 1. KL_targetData_learnedSourceModel
-    public static void KL_targetData_learnedSourceModel(Instances instances,String startNetworkName,ArrayList<SMILEBayesNet>  netWorkList) throws Exception {
+    public static void KL_targetData_learnedSourceModel(Instances instances,ArrayList<String> startNetworkName) throws Exception {
         // 1. KL_targetData_learnedSourceModel
         BayesNet bn = new BayesNet();
         transferLearningWeight = new String("KL_targetData_learnedSourceModel");
-        targetFinalModelName=startNetworkName.replace(".bif","")+"-"+targetDataName.replace(".arff", "")
+        targetFinalModelName=startNetworkName.get(0).replace(".bif","")+"-"+targetDataName.replace(".arff", "")
                 + "-"+ transferLearningApproach + "-" + transferLearningWeight + ".bif";
         bn.setSearchAlgorithm(new BNTL(configFileName,transferLearningApproach,transferLearningWeight, startNetworkName,
-                trueKL,learnedSource_nodeKLTable, avgKL,avgBFWeightTable,netWorkList));
+                trueKL,learnedSource_nodeKLTable, avgKL,avgBFWeightTable));
         bn.buildClassifier(instances);
         printOnePerformance(targetModelLoc,targetFinalModelName, targetDataLoc+targetTestDataName);
     }
 
-    public static void nodeKLTable_targetData_learnedSourceModel(Instances instances,String startNetworkName,ArrayList<SMILEBayesNet>  netWorkList) throws Exception{
+    public static void nodeKLTable_targetData_learnedSourceModel(Instances instances,ArrayList<String> startNetworkName) throws Exception{
         // 2. nodeKLTable_targetData_learnedSourceModel
         BayesNet bn = new BayesNet();
         transferLearningWeight = new String("nodeKLTable_targetData_learnedSourceModel");
-        targetFinalModelName=startNetworkName.replace(".bif","")+"-"+targetDataName.replace(".arff", "")
+        targetFinalModelName=startNetworkName.get(0).replace(".bif","")+"-"+targetDataName.replace(".arff", "")
                 + "-"+ transferLearningApproach + "-" + transferLearningWeight + ".bif";
         bn.setSearchAlgorithm(new BNTL(configFileName,transferLearningApproach,transferLearningWeight, startNetworkName,
-                trueKL,learnedSource_nodeKLTable, avgKL,avgBFWeightTable,netWorkList));
+                trueKL,learnedSource_nodeKLTable, avgKL,avgBFWeightTable));
         bn.buildClassifier(instances);
         printOnePerformance(targetModelLoc,targetFinalModelName, targetDataLoc+targetTestDataName);
     }
@@ -321,40 +321,40 @@ public class runnerBNTL {
      * intances--input data, sourcelearnedModel as start, netWorkList is the multi-source model.[1.xdsl,2.xdsl,..] the first is the main source model.
      * @param instances
      * @param startNetworkName
-     * @param netWorkList
      **/
 
-    public static void unadjust(Instances instances,String startNetworkName,ArrayList<SMILEBayesNet>  netWorkList) throws Exception{
+    public static void unadjust(Instances instances,ArrayList<String> startNetworkName) throws Exception{
         BayesNet bn = new BayesNet();
         transferLearningWeight = new String("unadjust");
-        targetFinalModelName=startNetworkName.replace(".bif","")+"-"+targetDataName.replace(".arff", "")
+        // get first source_model_name for final_model name....
+        targetFinalModelName=startNetworkName.get(0).replace(".bif","")+"-"+targetDataName.replace(".arff", "")
                 + "-"+ transferLearningApproach + "-" + transferLearningWeight + ".bif";
         bn.setSearchAlgorithm(new BNTL(configFileName,transferLearningApproach,transferLearningWeight, startNetworkName,
-                trueKL,trueBFWeightTable, avgKL,avgBFWeightTable,netWorkList));
+                trueKL,trueBFWeightTable, avgKL,avgBFWeightTable));
         bn.buildClassifier(instances);
         printOnePerformance(targetModelLoc,targetFinalModelName, targetDataLoc+targetTestDataName);
 
     }
 
-    public static void ratio(Instances instances,String startNetworkName,ArrayList<SMILEBayesNet>  netWorkList) throws Exception{
+    public static void ratio(Instances instances,ArrayList<String> startNetworkName) throws Exception{
         BayesNet bn = new BayesNet();
 
         transferLearningWeight = new String("ratio");
-        targetFinalModelName=startNetworkName.replace(".bif","")+"-"+targetDataName.replace(".arff", "")
+        targetFinalModelName=startNetworkName.get(0).replace(".bif","")+"-"+targetDataName.replace(".arff", "")
                 + "-"+ transferLearningApproach + "-" + transferLearningWeight + ".bif";
         bn.setSearchAlgorithm(new BNTL(configFileName,transferLearningApproach,transferLearningWeight, startNetworkName,
-                trueKL,trueBFWeightTable, avgKL,avgBFWeightTable,netWorkList));
+                trueKL,trueBFWeightTable, avgKL,avgBFWeightTable));
         bn.buildClassifier(instances);
         printOnePerformance(targetModelLoc,targetFinalModelName, targetDataLoc+targetTestDataName);
     }
 
-    public static void trueBayesFactor(Instances instances,String startNetworkName,ArrayList<SMILEBayesNet>  netWorkList) throws Exception{
+    public static void trueBayesFactor(Instances instances,ArrayList<String> startNetworkName) throws Exception{
         BayesNet bn = new BayesNet();
         transferLearningWeight = new String("trueBayesFactor");
-        targetFinalModelName=startNetworkName.replace(".bif","")+"-"+targetDataName.replace(".arff", "")
+        targetFinalModelName=startNetworkName.get(0).replace(".bif","")+"-"+targetDataName.replace(".arff", "")
                 + "-"+ transferLearningApproach + "-" + transferLearningWeight + ".bif";
         bn.setSearchAlgorithm(new BNTL(configFileName,transferLearningApproach,transferLearningWeight, startNetworkName,
-                trueKL,trueBFWeightTable, avgKL,avgBFWeightTable,netWorkList));
+                trueKL,trueBFWeightTable, avgKL,avgBFWeightTable));
         bn.buildClassifier(instances);
         printOnePerformance(targetModelLoc,targetFinalModelName, targetDataLoc+targetTestDataName);
 
@@ -369,26 +369,26 @@ public class runnerBNTL {
     // load multi-source models.
     // this method only contain two network.
     // will modify later for multi-source in one folder. 
-    public static ArrayList<SMILEBayesNet> readNetwork(){
-        // add network list,
-        // since it is smile network,  create an array list
-    // Smile Network
-        ArrayList<SMILEBayesNet>  netWorkList = new ArrayList<>();
-
-        for(String temp: sourceClearnInjectModelXDSL){
-
-            Network net = new Network();
-            net.readFile(sourceModelLoc+temp);
-
-            // Smile Network
-            boolean convertIDs = false;
-            SMILEBayesNet network = new SMILEBayesNet(net, convertIDs);
-            netWorkList.add(network);
-
-        }
-
-        return netWorkList;
-    }
+//    public static ArrayList<SMILEBayesNet> readNetwork(){
+//        // add network list,
+//        // since it is smile network,  create an array list
+//    // Smile Network
+//        ArrayList<SMILEBayesNet>  netWorkList = new ArrayList<>();
+//
+//        for(String temp: sourceClearnInjectModelXDSL){
+//
+//            Network net = new Network();
+//            net.readFile(sourceModelLoc+temp);
+//
+//            // Smile Network
+//            boolean convertIDs = false;
+//            SMILEBayesNet network = new SMILEBayesNet(net, convertIDs);
+//            netWorkList.add(network);
+//
+//        }
+//
+//        return netWorkList;
+//    }
 
 
 
@@ -617,28 +617,53 @@ public class runnerBNTL {
         sourceModelLoc=Utility.getConfig("sourceModelLoc",configFileName);
         sourceDataLoc=Utility.getConfig("sourceDataLoc",configFileName);
         sourceDataName=Utility.getConfig("sourceDataName",configFileName);
-        sourceDataSize=Utility.getConfig("sourceDataSize",configFileName);
-        sourceTrueModelName=Utility.getConfig("sourceTrueModelName",configFileName);
-        sourceCleanInjectModelXML=Utility.getConfig("sourceCleanInjectModelXML",configFileName);
-        sourceLearnedModelName=sourceDataName.replace(".arff", "-" + featureSelectionApproach + "-" + modelLearningApproach + ".bif");
-        sourceLearnedCleanedModelName = sourceLearnedModelName.replace(".bif", "")+"_cleaned.bif";
-        sourceTrueCleanedModelName = sourceTrueModelName.replace(".bif", "")+"_cleaned.bif";
 
+        //sourceTrueModelName=Utility.getConfig("sourceTrueModelName",configFileName);
+        //sourceCleanInjectModelXML=Utility.getConfig("sourceCleanInjectModelXML",configFileName);
 
-        // multiple version to get list of network
-        // use [1.xdsl, 2.xdsl, 3.xdsl....]
+        // multiple version to get list of source_model.
+        // [1.bif, 2.bif, 3.bif....]
         // add by John Song for multi-version
-        String temp =Utility.getConfig("sourceCleanInjectModelXDSL",configFileName);
-        String [] temp1 = temp.split(",");
-        sourceClearnInjectModelXDSL= new ArrayList<>();
-        for(String a: temp1){
-            sourceClearnInjectModelXDSL.add(a);
+        String sourceModels =Utility.getConfig("sourceLearnedModelName", configFileName);
+        String [] sourceM = sourceModels.split(",");
+        sourceLearnedModelName = new ArrayList<>();
+        for(String i: sourceM){
+            sourceLearnedModelName.add(i);
         }
+
+
+        //  since source each model has their own sourceDatasize.
+        // to throw a error if it does not match
+        String dataSource =Utility.getConfig("sourceDataSize",configFileName);
+        String[] dataSize = dataSource.split(",");
+        sourceDataSize = new ArrayList<>();
+        for(String d: dataSize)
+            sourceDataSize.add(d);
+
+        // error handling section
+        if(sourceDataSize.size()!=sourceLearnedModelName.size()){
+            throw new RuntimeException("Please check the number of models and DataSize\n " +
+                    "'the number of model[1.bif,2.bif,..] === the number of datasize[12,50,..]'");
+        }
+
+
+
+//        // multiple version to get list of network
+//        // use [1.xdsl, 2.xdsl, 3.xdsl....]
+//        // add by John Song for multi-version
+//        String temp =Utility.getConfig("sourceCleanInjectModelXDSL",configFileName);
+//        String [] temp1 = temp.split(",");
+//        sourceClearnInjectModelXDSL= new ArrayList<>();
+//        for(String a: temp1){
+//            sourceClearnInjectModelXDSL.add(a);
+//        }
 
         //sourceSimulateDataLoc=Utility.getConfig("sourceSimulateDataLoc",configFileName);
         //sourceSimulateDataName=Utility.getConfig("sourceSimulateDataName",configFileName);
 
     }
+
+
     public static void targetPart() throws FileNotFoundException{
         targetModelLoc=Utility.getConfig("targetModelLoc",configFileName);
         targetDataLoc=Utility.getConfig("targetDataLoc",configFileName);
