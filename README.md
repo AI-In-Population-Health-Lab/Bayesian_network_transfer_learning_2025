@@ -22,7 +22,7 @@ those two packages are the core of this project.
 Please check the video in tutorials9 folders. 
 
 ###  Instructions 
-1.  Download the zip file from the [github](https://github.com/AI-In-Population-Health-Lab/BNTL_update_version) / or `git clone https://github.com/AI-In-Population-Health-Lab/BNTL_update_version.git`
+1.  Download the zip file from the [github](https://github.com/AI-In-Population-Health-Lab/BNTL_multiSource.git) / or `git clone https://github.com/AI-In-Population-Health-Lab/BNTL_multiSource.git
 2.  Intellj IDEA--> open project--> find the directory for the unzipped file
 3.  Set up JDK as video shows( Java 1.8, 11, or 18 is good)
 4.  Go to `runnerBNTL`  class to run--> Edit configurations--> Modify options-->add VM options (under Java tab)
@@ -44,13 +44,20 @@ Java HotSpot(TM) 64-Bit Server VM (build 18.0.2.1+1-1, mixed mode, sharing)
 jsmile-academic-2.0.10
 ```
 
-### 2.3.1 How to Run 
+### 2.3.1 How to Run   
+
+### 1. Download zip file 
+### 2. use Intellj IDEA open the project 
+### 3. Go to src-> test_start class
+### 4. Edit Configruation-->Modify Options-->VM options-->`-Djava.library.path=`
+
+---
 
 ### 1. download the BNTL.jar package 
 ### 2. Open the terminal/ cmd windows 
 
 ```
-java -jar BNTL.jar
+java -jar BNTL_MultiSource.jar
 ```
 
 After typing this, it will provide this content
