@@ -180,7 +180,7 @@
 		<state id="P" />
 		<state id="A" />
 		<parents>diagnosis</parents>
-		<probabilities>0.30000000000000004 0.35000000000000003 0.35000000000000003 0.4602307225258045 0.18336369156041288 0.35640558591378263 </probabilities>
+		<probabilities>0.3 0.35 0.35 0.4602307225258045 0.18336369156041288 0.35640558591378263 </probabilities>
 	</cpt>
 <cpt id="C0000737">
 		<state id="M" />
@@ -236,7 +236,7 @@
 		<state id="P" />
 		<state id="A" />
 		<parents>diagnosis</parents>
-		<probabilities>0.2 0.5 0.3 0.33211900425015184 0.36490588949605346 0.3029751062537948 </probabilities>
+		<probabilities>0.2 0.5 0.3 0.3321190042501518 0.3649058894960534 0.30297510625379476 </probabilities>
 	</cpt>
 <cpt id="C0009763">
 		<state id="M" />
