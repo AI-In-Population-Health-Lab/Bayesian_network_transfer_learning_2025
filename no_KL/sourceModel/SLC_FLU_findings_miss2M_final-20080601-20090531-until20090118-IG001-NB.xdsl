@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
- <smile version="1.0" id="/Users/johnsong/documents/test_bntl_jar/no_KL/sourceModel/SLC_FLU_findings_miss2M_final-20080601-20090531-until20090118-IG001-NB.bif">
+ <smile version="1.0" id="./no_KL/sourceModel/SLC_FLU_findings_miss2M_final-20080601-20090531-until20090118-IG001-NB.bif">
 	<nodes>
 	<cpt id="diagnosis">
 		<state id="T" />

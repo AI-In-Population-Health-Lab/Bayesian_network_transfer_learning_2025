@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
- <smile version="1.0" id="/Users/johnsong/documents/test_bntl_jar/no_KL/sourceModel/2.bif">
+ <smile version="1.0" id="./no_KL/sourceModel/2.bif">
 	<nodes>
 	<cpt id="diagnosis">
 		<state id="T" />
