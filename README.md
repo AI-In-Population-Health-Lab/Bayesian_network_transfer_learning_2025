@@ -106,7 +106,32 @@ nodeKLTable_targetData_trueSourceModel=diagnosis,0.03595232239858527;age_group,0
 
 
 
-# 4. Resources  
+# 4. Weighted & Multi-Sources  
+## 4.1 Weighted (unadjusted & Ratio)
+Searching model process is led by a score. The score is the sum of log marginal likelihood and log structure prior
+![Alt text](./asset/1.png)  
+
+
+### 4.1.1 Unadjusted Approach
+Use sample size of the source training data.
+### 4.1.2 Ratio Approach
+Use sample size of the target training data.  
+
+Number of target instances / number of source training instances
+
+Weight the source sample size based on the similarity between the target distribution and the source distribution.  If the source and the target distributions are very different, it would be better to assign a lower equivalent sample size for a transferred source model.  
+
+![Alt text](./asset/2.png)  
+
+
+## 4.2 Multi-Sources  
+
+![Alt text](./asset/3.png)
+![Alt text](./asset/4.png)  
+
+
+
+# 5. Resources  
 
 - [Weka package](https://waikato.github.io/weka-wiki/)  It provides data format structure, the Bayes Network Structure, classifier, evaluation methods.
 - [Jsmile package](https://support.bayesfusion.com/docs/Wrappers/)It is encoding the Bayes Network for depth of probability calculation.   
