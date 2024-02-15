@@ -2,9 +2,13 @@ public class QuickStart {
 
     public static void main(String[] args) throws Exception {
 
+        // configuration in IntellIDEA
 
+        // Edit Configuration---> Modify Options(blue letter)--->Add VM Options-->
+        // add this -Djava.library.path= <your absolute path>/lib
 
-        //-Djava.library.path=/Users/johnsong/Documents/Ye_lab/releaseVersion/lib
+        //[For example ]
+        // -Djava.library.path=/Users/johnsong/Documents/Ye_lab/releaseVersion/lib
 
         // run example-------------------------------
         runnerBNTL runnerBNTL = new runnerBNTL();
