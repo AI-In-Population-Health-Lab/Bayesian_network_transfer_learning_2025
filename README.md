@@ -28,6 +28,9 @@ This project created the Bayesian Network Transfer Learning (BN-TL) algorithm to
 3. Check QuickStart.java comments for configuration to add smile package into library.  
 4. Run  
 
+![Alt text](./asset/5.png)
+![Alt text](./asset/6.png)
+![Alt text](./asset/7.png)
 
 # 3. Run your own models  
 
