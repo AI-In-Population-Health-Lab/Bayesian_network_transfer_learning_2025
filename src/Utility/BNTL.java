@@ -318,10 +318,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         startNetworkName = startNetwork;
 
         System.out.println("Configuration File is " + configFileName);
-//        System.out.println("Start network is ");
-//        for(String n: startNetworkName){
-//
-//        }
+
 
         transferLearningApproach = scoreMethod;
         transferLearningWeight = adjustMethod;
@@ -514,16 +511,6 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
 
 
 
-        //Network net = new Network(); // p()--> p.23 xi =k
-
-        // 	net.readFile("00experiment/priorModel/BrainTumor_Prior_Network.xdsl");
-//	 	net.readFile("00experiment/intermediate/source_clean_inject.xdsl");
-       // net.readFile(sourceModelLoc+sourceClearnInjectModelXDSL);
-
-        // Smile Networkd
-//        boolean convertIDs = false;
-//        smileNet = new SMILEBayesNet(net, convertIDs);
-
 
 
         /*Part B. Getting target model
@@ -542,19 +529,15 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
             adjustSourceSampleSize(i);
         }
 
-        //14
+
         targetNode = targetInstances.numAttributes();
 
-        // set max_parents <6, for research and time consume purpose
+
         int max_parents = 6;   //targetInstances.numAttributes()-1;
-        //13
+
         int max_children = targetInstances.numAttributes()-1;
 
-//        // test if parents = 9-11   add by John Song for testing purpose
 
-//        if(max_parents>6){
-//            max_parents = 6;
-//        }
 
 //=========================================
         setMaxNrOfParents(max_parents);
@@ -582,9 +565,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         //This net keeps all parents set from source_clean_BayesNet and also include all target features. It is similar to the source_clean_inject.
         updateBayesNet(targetTrainingData);
 
-//		m_BayesNet.estimateCPTs(); //this is using simple estimator
-//		System.out.println(print(m_BayesNet));
-//		System.out.println(m_BayesNet);
+
 
         if (m_ScoreMetric==0){
             System.out.println("ScoreMetric: K2"); //0 is K2 method
@@ -659,11 +640,6 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         System.out.println("\n------Pruning for initial model");
         weedoutWeakArcs();	//firstly, prune the inital model
 
-//		updateBayesNet(targetTrainingData);
-//		m_BayesNet.estimateCPTs();
-//		System.out.println(print(m_BayesNet));
-//		System.out.println(m_BayesNet); //
-        //	updateBayesNet(); // update parent set of the bayesian network based on parents[][]
 
         System.out.println(String.format("After pruning == score: %f", scoreNode(targetNode)));
 
@@ -711,32 +687,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         printout2.close();
 
 
-		/*Part 4. get Performance
 
-		String testDataset = new String(targetDataLoc+targetTestDataName);
-		Instances testData = new Instances(new BufferedReader(new FileReader(testDataset)));
-
-
-		System.out.println("AUC_final_model:" + evaluateBN(m_BayesNet, testData));
-	//	System.out.print(m_BayesNet.graph());
-
-		System.out.println("AUC_source_clean:" + evaluateBN(source_clean_BayesNet, testData));
-	//	System.out.print(source_clean_BayesNet.graph());
-
-		System.out.println("AUC_source_clean_inject:" + evaluateBN(source_clean_inject_BayesNet, testData));
-
-		String targetOnlyModel = new String(targetModelLoc+targetLearnedModelName);
-		BIFReader targetOnlyModel_BayesNet = new BIFReader();
-		targetOnlyModel_BayesNet.processFile(targetOnlyModel);
-	//	System.out.print(targetOnlyModel_BayesNet.graph());
-		System.out.println("AUC_target_only:" + evaluateBN(targetOnlyModel_BayesNet, testData));
-
-		String trueTargetModel = new String(targetModelLoc+targetTrueModelName);
-		BIFReader ture_target_BayesNet = new BIFReader();
-		ture_target_BayesNet.processFile(trueTargetModel);
-		System.out.println("AUC_true_target:" + evaluateBN(ture_target_BayesNet, testData));
-
-		*/
 
     } // buildStructure
 
@@ -917,13 +868,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
             sourceDataSize.add(d);
 
 
-        //sourceTrueModelName=Utility.getConfig("sourceTrueModelName",configFileName);
-        //sourceCleanInjectModelXML=Utility.getConfig("sourceCleanInjectModelXML",configFileName);
-        //sourceLearnedModelName=sourceDataName.replace(".arff", "-" + featureSelectionApproach + "-" + modelLearningApproach + ".bif");
-        //sourceLearnedCleanedModelName = sourceLearnedModelName.replace(".bif", "")+"_cleaned.bif";
-        //sourceTrueCleanedModelName = sourceTrueModelName.replace(".bif", "")+"_cleaned.bif";
-        //sourceSimulateDataLoc=Utility.getConfig("sourceSimulateDataLoc",configFileName);
-        //sourceSimulateDataName=Utility.getConfig("sourceSimulateDataName",configFileName);
+
 
     }
     public static void targetPart() throws FileNotFoundException{
@@ -1081,15 +1026,10 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
                 ArffLoader arff1 = new ArffLoader();
                 arff1.setFile(new File(targetDataLoc+targetTestDataName));
                 Instances  targetTestInstances = arff1.getDataSet();
-//				weightTable = Utility.getTrueAverageBayesFactorTable(targetNodeName, sharedNodeList,
-//						sourceDataSize, sourceModelLoc,sourceTrueModelName,
-//						targetModelLoc, targetTrueModelName,sourceSimulateDataLoc) ;
                 weightTable = trueBFWeightTable ;
             }
             else {
-//				weightTable = Utility.getAverageBayesFactorTable(targetNodeName, sharedNodeList,
-//					targetInstances,sourceDataSize,sourceModelLoc,sourceLearnedCleanedModelName,sourceSimulateDataLoc,
-//					sourceDataLoc, sourceDataName);
+
                 weightTable = avgBFWeightTable ;
             }
             for (int i=0; i<sharedNodeList.size(); i++){
@@ -1313,18 +1253,9 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         for (int parentIndex=0; parentIndex<theParents.getNrOfParents(); parentIndex++){
             nodeNameList.add(m_BayesNet.getNodeName(theParents.getParent(parentIndex)));
         }
-//		for (int k=0; k<nodeNameList.size(); k++){
-//			System.out.print(nodeNameList.get(k));
-//		}
-//		System.out.println();
+
         Map<List<String>,Double> jointProbs = netWork.probabilities(nodeNameList, permutationList);
         Set<List<String>> keySet = jointProbs.keySet();
-//		for (List<String> oneList : keySet){
-//			for (int i=0; i<oneList.size(); i++){
-//				System.out.print(oneList.get(i));
-//			}
-//			System.out.println(jointProbs.get(oneList));
-//		}
         return jointProbs;
     }
 
@@ -1378,11 +1309,6 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
             }
 
 
-            // add scoring to stop
-//            double flag = Math.abs(nodeScore-bestScore);
-//            System.out.println("nodeScore:+"+ nodeScore);
-//            System.out.println("bestScore:"+ bestScore);
-//            System.out.println("flag  "+ flag);
 
            if (bestScore > nodeScore) {
                 nodeScore = bestScore;
@@ -1644,11 +1570,6 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         //calculate Nij first
         // child_node...value[O,P,N]
         for (int nodeValue = 1; nodeValue <= nodeDimension[node]; nodeValue++){
-            //	System.out.println(nodeInfo[node].name);
-            // getPriorProb(child, child_node_value, parent_value_instance)
-            //k[nodeValue] = 1.0*oneAdjustedPriorSampleSize*getPriorProb(node, nodeValue, values);
-            //k[nodeValue] = 1.0*oneAdjustedPriorSampleSize*getPriorProb(network1,node, nodeValue, values);
-            // k[nodeValue] = 1.0*oneAdjustedPriorSampleSize*getPriorProb(network2,node, nodeValue, values);
 
             for (int z=0; z<smileNet.size(); z++){
                 // sum of {k1,k2,k3,....}
@@ -1724,10 +1645,6 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         ArrayList<String> currentAssignment = new ArrayList<String>();
 
 
-        //Ye Node: kevin code node number is 1 index more than the node number in the weka Bayesian.
-        //Think about whether I should add 1 for the node later.
-        //nodeInfo is variable in Kevin's code. Do not need to deal with plus or minus 1 issue.
-
         // add children node into namelist
         nodeNameList.add(new String(nodeInfo[node].name));
 
@@ -1752,23 +1669,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         // get combination of nodes' value
         // for instance node1 [p,a,b], node2 [a,b,c]  the total permuatation is 9. [p a]  [p b] [p c].....
         ArrayList<ArrayList<String>> pertumationList = getAllPermutationForList(nodeNameList);
-//	    	System.out.println("nodeList");
-//	    	for (int p=0; p<nodeNameList.size(); p++){
-//	    		System.out.println(nodeNameList.get(p));
-//	    	}
-//	    	System.out.println("pertumationList");
-//	    	for (int p=0; p<pertumationList.size(); p++){
-//	    		ArrayList<String> oneArray = pertumationList.get(p);
-//	    		for (int k=0; k<oneArray.size(); k++){
-//	    			System.out.print(oneArray.get(k)+",");
-//	    		}
-//	    		System.out.println();
-//	    	}
-//	    	System.out.println("currentAssignment");
-//	    	for (int p=0; p<currentAssignment.size(); p++){
-//	    		System.out.print(currentAssignment.get(p)+",");
-//	    	}
-//	    	System.out.println();
+
 
 //-----------John Note------------------------------------------------//
         // smileNet is the source_clean_inject model
@@ -1777,21 +1678,6 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         Map<List<String>,Double> conditionalProbs = netWork.probabilities(nodeNameList, pertumationList);
         prob = conditionalProbs.get(currentAssignment);
         Set<List<String>> keySet = conditionalProbs.keySet(); //the keySet lists all possible configurations
-        //if (parentValues.length==2){
-//				for (List<String> oneList : keySet){
-//					for (int i=0; i<oneList.size(); i++){
-//						System.out.print(oneList.get(i));
-//					}
-//					System.out.println(conditionalProbs.get(oneList));
-//				}
-//				System.out.println("currentAssisgment:");
-//				for (int s=0; s<currentAssignment.size(); s++){
-//					System.out.print(currentAssignment.get(s));
-//				}
-//				System.out.println(prob+"");
-        //}
-
-
         return prob;
     }
 
@@ -3228,59 +3114,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
 
 
 
-	/*
-	 * protected String print(BayesNet bn){
-	 *
-		String model = "";
-		//Initialize BayesNet to single variable
-		for(int iNode = 0; iNode < bn.getNrOfNodes(); iNode++) {
-			if(hasParents(bn, iNode) || hasChildren(bn, iNode) || iNode == targetNode){
-				model += bn.getNodeName(iNode) + " ("+bn.getCardinality(iNode)+")";
-				if(bn.getParentSet(iNode).getNrOfParents() > 0){
-					model += " --> ";
-				}
-				for(int jNode = 0; jNode < bn.getParentSet(iNode).getNrOfParents(); jNode++){
-					int pNode = bn.getParentSet(iNode).getParent(jNode);
 
-					model += bn.getNodeName(pNode);
-					if((jNode+1) < bn.getParentSet(iNode).getNrOfParents()){
-						model += ", ";
-					}
-				}
-
-				model += "\n";
-			}
-			else{
-				model += bn.getNodeName(iNode) + " ("+bn.getCardinality(iNode)+")\n";
-			}
-		}
-		return model;
-		//System.out.println("Score: " + scoreNode(targetNode));
-		//System.out.println("----");
-	}*/
-
-
-	/*protected void printFull(BayesNet bn){
-		//Initialize BayesNet to single variable
-		for(int iNode = 0; iNode < bn.getNrOfNodes(); iNode++) {
-			System.out.print("Node["+iNode+"]: "+bn.getNodeName(iNode) + " ("+bn.getCardinality(iNode)+")");
-			if(bn.getParentSet(iNode).getNrOfParents() > 0){
-				System.out.print(" --> ");
-			}
-			for(int jNode = 0; jNode < bn.getParentSet(iNode).getNrOfParents(); jNode++){
-				int pNode = bn.getParentSet(iNode).getParent(jNode);
-
-				System.out.print(bn.getNodeName(pNode));
-				if((jNode+1) < bn.getParentSet(iNode).getNrOfParents()){
-					System.out.print(", ");
-				}
-			}
-
-			System.out.println("");
-		}
-
-		System.out.println("----");
-	}*/
 
     //These prior methods need to be checked
     protected double prior_EBMC2() {
@@ -3290,14 +3124,7 @@ public class BNTL extends SearchAlgorithm implements TechnicalInformationHandler
         return (nc * Math.log(p) + (nn - nc) * Math.log(1 - p));
     }
 
-//    public double prior(int node) {
-//        double np = (double) parents[node][0];
-//        double nc = (double) numberOfChildren;
-//        double nn = (double) (numberOfNodes - 1);
-//        double p = ((double) m_ExpectedParentsOfTarget) / nn;  // modify m_ExpectedParentsOfTarget part
-//        // nn equals the number of potential predictors of the target
-//        return ((np + nc) * Math.log(p) + (nn - nc - np) * Math.log(1 - p));
-//    }
+
 
     protected double prior_EBMC1(int node) {
 //		double np = (double) m_BayesNet.getNrOfParents(node);

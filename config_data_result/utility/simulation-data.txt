@@ -1,0 +1,27 @@
+-----Source Part-----
+sourceDataLoc=./config_data_result/sourceData/
+sourceModelLoc=./config_data_result/sourceModel/
+sourceDataName=acmodel_0810_topazac_seed620128888_size8000.arff
+sourceLearnedModelName=acmodel_0810_topazac_seed620128888_size8000-IG-K2.bif,another_model.bif
+sourceDataSize=8000,800
+-----Target Part-----
+targetNodeName=diagnosis
+targetTrainDataSize=21
+targetTestDataName=slcmodel_0810_topazslc_seed266811895_size10000.arff
+targetTestDataSize=10000
+targetModelLoc=./config_data_result/targetModel/
+targetDataName=slcmodel_0810_topazslc_seed-1292564519_size400.arff
+targetDataLoc=./config_data_result/targetData/
+-------feature-------
+modelLearningApproach=K2
+featureSelectionApproach=IG001
+-------Path------
+temporaryFileName=temp.xml
+experimentFileLoc=./config_data_result/
+utilityLoc=./config_data_result/utility/
+resultProbName=prob.csv
+resultAUCName=auc.csv
+logName=simulation.txt
+resultLoc=./config_data_result/result/
+logLoc=./config_data_result/log/
+hashCodeName=hashCode.xml

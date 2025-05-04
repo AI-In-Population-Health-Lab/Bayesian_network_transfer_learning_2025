@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <smile version="1.0" id="D:/Dropbox/YeEclipseThesis_Laptop/ProcessSimulatedInfluenza_Laptop/folder10/000influenza_ac_topazac_slc_topazslc/sourceModel/acmodel_0810_topazac_seed620128888_size8000-IG-K2_cleaned.bif">
+	<nodes>
+	<cpt id="diagnosis">
+		<state id="O" />
+		<state id="N" />
+		<state id="I" />
+		<probabilities>0.927902036736224 0.06772460327377233 0.0043733599900037485 </probabilities>
+	</cpt>
+	<cpt id="nasal_swab_order">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis </parents>
+		<probabilities>0.001884760366182014 6.731287022078621E-4 0.9974421109316102 0.34191176470588236 0.011029411764705883 0.6470588235294118 0.43243243243243246 0.02702702702702703 0.5405405405405406 </probabilities>
+	</cpt>
+	<cpt id="unspecified_cough">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis </parents>
+		<probabilities>0.08441033925686592 0.2284598815293484 0.6871297792137857 0.5845588235294118 0.20955882352941177 0.20588235294117646 0.6486486486486487 0.13513513513513514 0.21621621621621623 </probabilities>
+	</cpt>
+	<cpt id="reported_fever">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis </parents>
+		<probabilities>0.16222401723209479 0.49771136241249325 0.34006462035541196 0.6066176470588235 0.2922794117647059 0.10110294117647059 0.7297297297297297 0.13513513513513514 0.13513513513513514 </probabilities>
+	</cpt>
+	<cpt id="hypoxemia">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis </parents>
+		<probabilities>0.00942380183091007 0.08992999461497038 0.9006462035541195 0.10110294117647059 0.2113970588235294 0.6875 0.08108108108108109 0.35135135135135137 0.5675675675675675 </probabilities>
+	</cpt>
+	<cpt id="influenza_lab_positive">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis </parents>
+		<probabilities>8.077544426494346E-4 1.3462574044157243E-4 0.999057619816909 0.02022058823529412 0.003676470588235294 0.9761029411764706 0.24324324324324326 0.02702702702702703 0.7297297297297297 </probabilities>
+	</cpt>
+	<cpt id="age_group">
+		<state id="ls6" />
+		<state id="ge6ls65" />
+		<state id="ge65" />
+		<parents>diagnosis </parents>
+		<probabilities>0.06825525040387723 0.7334410339256866 0.1983037156704362 0.125 0.8051470588235294 0.06985294117647059 0.05405405405405406 0.6486486486486487 0.2972972972972973 </probabilities>
+	</cpt>
+	</nodes>
+	<extensions>
+	 <genie version="1.0" app="GeNIe 2.0.2603.0" name="Flu" faultnameformat="nodestate">
+		<node id="nasal_swab_order">
+			<name>nasal_swab_order</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="unspecified_cough">
+			<name>unspecified_cough</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="reported_fever">
+			<name>reported_fever</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="hypoxemia">
+			<name>hypoxemia</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="influenza_lab_positive">
+			<name>influenza_lab_positive</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="age_group">
+			<name>age_group</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="diagnosis">
+			<name>diagnosis</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+	 </genie>
+	</extensions>
+</smile>

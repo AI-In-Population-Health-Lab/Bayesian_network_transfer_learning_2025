@@ -113,20 +113,14 @@ public class runnerBNTL {
 
         // Experiment folder
 //=======================================================================================================================
-        // relative
-        //String folderExperimentLoc = "./000influenza_ac_topazac_slc_topazslc/";
 
-        //path for jar
         String folderExperimentLoc = filePath;
         String fileName = configurationFile;
-        // /Users/johnsong/documents/ye_lab/bayesnet_tranforming/000infleuenza_ac_topazac_slc_topazslc
 
-
-       //String fileName = "folder10_Influenza_CFS_acmodel_0810_topazac_size50_slcmodel_0810_topazslc.bif_targetDataSize_1000-IG";
 //===================================================================================================================================
 
         // call configuration and run experiment from this function
-        // folderNum is redundant.
+
         String configLoc = new String(folderExperimentLoc+"/utility/");
         runOneConfig(configLoc,fileName,unadjust,ratio,KL);
 
@@ -193,12 +187,6 @@ public class runnerBNTL {
      /* 2. transform learning performance:
      Training section:
         start  source_true_model  &  Target Training Data  IN didfferent [transferLearningWeight]
-
-        1. KL_targetData_trueSourceModel
-        2. nodeKLTable_targetData_trueSourceModel
-        3. unadjust
-        4. ratio
-        5. trueBayesFactor
       */
         //configFileName = configLoc + fileName + ".txt";
         getModels(unAdjust,ratio,KL);
@@ -238,7 +226,7 @@ public class runnerBNTL {
 
 // source_Learn data & target training data==================================
             //get target trainng data
-            //slcmodel_0810_topazslc_seed1191167696_size1000.arff
+
             instances = filtedData;
 
             //acmodel_0810_topazac_seed-665150065_size50-IG-K2.bif, 2.bif, 3.bif...
@@ -366,29 +354,6 @@ public class runnerBNTL {
     // Source_learned model
 
 
-    // load multi-source models.
-    // this method only contain two network.
-    // will modify later for multi-source in one folder. 
-//    public static ArrayList<SMILEBayesNet> readNetwork(){
-//        // add network list,
-//        // since it is smile network,  create an array list
-//    // Smile Network
-//        ArrayList<SMILEBayesNet>  netWorkList = new ArrayList<>();
-//
-//        for(String temp: sourceClearnInjectModelXDSL){
-//
-//            Network net = new Network();
-//            net.readFile(sourceModelLoc+temp);
-//
-//            // Smile Network
-//            boolean convertIDs = false;
-//            SMILEBayesNet network = new SMILEBayesNet(net, convertIDs);
-//            netWorkList.add(network);
-//
-//        }
-//
-//        return netWorkList;
-//    }
 
 
 
@@ -648,18 +613,7 @@ public class runnerBNTL {
 
 
 
-//        // multiple version to get list of network
-//        // use [1.xdsl, 2.xdsl, 3.xdsl....]
-//        // add by John Song for multi-version
-//        String temp =Utility.getConfig("sourceCleanInjectModelXDSL",configFileName);
-//        String [] temp1 = temp.split(",");
-//        sourceClearnInjectModelXDSL= new ArrayList<>();
-//        for(String a: temp1){
-//            sourceClearnInjectModelXDSL.add(a);
-//        }
 
-        //sourceSimulateDataLoc=Utility.getConfig("sourceSimulateDataLoc",configFileName);
-        //sourceSimulateDataName=Utility.getConfig("sourceSimulateDataName",configFileName);
 
     }
 
@@ -762,7 +716,7 @@ public class runnerBNTL {
 
     //------------------------This is just write configuration into file-----------------------------------------//
     // Thus, I create a separate function to place those code//
-    // 这个方法里面的code 是记录的，就是写进一个新的文件。保持记录的一个功用，所以放在一个function 里面//
+
     public static void nothingFunction(String configLoc, String fileName, String KL) throws Exception{
         configFileName = configLoc + fileName + ".txt";
         //configFileName = "/Users/johnsong/Downloads/BNTL-mainpackage-utility-package/BNTL-test/000influenza_ac_topazac_slc_topazslc/utility/folder10_Influenza_CFS_acmodel_0810_topazac_size50_slcmodel_0810_topazslc.bif_targetDataSize_1000-IG.txt";
@@ -806,117 +760,10 @@ public class runnerBNTL {
 //------------------------------------------------------------------------------------------------------------//
 
 //------------------------------------------------------------------------------------------------------------//
-//    public static void runOneExperiment( String experimentName) throws Exception{
-//        for (int i=2; i<=2; i++){
-//            int folderNum = i;	//"D:/Dropbox/YeEclipseThesis_Laptop/ProcessSimulatedInfluenza_Laptop/folder" + folderNum +
-//            String folderExperimentLoc = "./000influenza_" + experimentName  + "/";
-//            String configLoc = new String(folderExperimentLoc+"utility/");
-//            File folder = new File(configLoc);
-//            for (File fileEntry : folder.listFiles()) {
-//                if (fileEntry.isFile()) {
-//                    String utilityFileName = fileEntry.getName();
-//                    System.out.println(utilityFileName);
-//                    if (utilityFileName.contains("_targetDataSize_")){
-//                        String fileName = utilityFileName.replace(".txt", "");
-//                        int sourceSize = Integer.parseInt(fileName.split("_size")[1].split("_")[0]);
-//                        int targetSize = Integer.parseInt(fileName.split("targetDataSize_")[1].replace(".txt", "").replace("-IG", ""));
-//                        if ((sourceSize==50 | sourceSize==8000) && (targetSize==50 | targetSize==8000)) {
-//                            runOneConfig(configLoc,fileName, folderNum);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 
 
-//==========================================================================================================================================================
- //  public void sourceTrue(Instances instances) throws Exception{
-        //===== start  source_true_model  &  Target Training Data=========================================
-        // source_true_model
-        // target training Data
-        // trueKL= 1.8224292702088067
-        //learnedSource_nodeKLTable (nodeKLTable_targetData_learnedSourceModel)
-        // avgKL (never used)  default = 0.0
-        // avgBFWeightTable (never get input)
-        //KL_targetData_trueSourceModel
-        //acmodel_0810_topazac.bif
-
-// 1. KL_targetData_trueSourceModel
-//        String startNetworkName = sourceTrueModelName;
-//        printoutAUC.println("startNetworkName:" + startNetworkName);
-//        BayesNet bn = new BayesNet();
-//        //KL_targetData_trueSourceModel=1.660745666413443
-//        transferLearningWeight = new String("KL_targetData_trueSourceModel");
-//
-//        //acmodel_0810_topazac-slcmodel_0810_topazslc_seed1191167696_size1000-priorModelApproach-KL_targetData_trueSourceModel.bif
-//        targetFinalModelName=startNetworkName.replace(".bif","")+"-"+targetDataName.replace(".arff", "")
-//                + "-"+ transferLearningApproach + "-" + transferLearningWeight + ".bif";
-//        bn.setSearchAlgorithm(new BNTL(configFileName,transferLearningApproach,transferLearningWeight, startNetworkName,
-//                trueKL,learnedSource_nodeKLTable, avgKL,avgBFWeightTable));
-//        // build
-//        bn.buildClassifier(instances);
-//        // Evaluation part
-//        printOnePerformance(targetModelLoc,targetFinalModelName, targetDataLoc+targetTestDataName);
-//
-//// 2. nodeKLTable_targetData_trueSourceModel
-//        bn = new BayesNet();
-//        transferLearningWeight = new String("nodeKLTable_targetData_trueSourceModel");
-//
-//        targetFinalModelName=startNetworkName.replace(".bif","")+"-"+targetDataName.replace(".arff", "")
-//                + "-"+ transferLearningApproach + "-" + transferLearningWeight + ".bif";
-//        bn.setSearchAlgorithm(new BNTL(configFileName,transferLearningApproach,transferLearningWeight, startNetworkName,
-//                trueKL,learnedSource_nodeKLTable, avgKL,avgBFWeightTable));
-//        bn.buildClassifier(instances);
-//        printOnePerformance(targetModelLoc,targetFinalModelName, targetDataLoc+targetTestDataName);
-//
-//        // 3. unadjust=============================================================================================================
-//        bn = new BayesNet();
-//        transferLearningWeight = new String("unadjust");
-//        targetFinalModelName=startNetworkName.replace(".bif","")+"-"+targetDataName.replace(".arff", "")
-//                + "-"+ transferLearningApproach + "-" + transferLearningWeight + ".bif";
-//        bn.setSearchAlgorithm(new BNTL(configFileName,transferLearningApproach,transferLearningWeight, startNetworkName,
-//                trueKL,trueBFWeightTable, avgKL,avgBFWeightTable));
-//        bn.buildClassifier(instances);
-//        printOnePerformance(targetModelLoc,targetFinalModelName, targetDataLoc+targetTestDataName);
-//
-//        // 4. ratio
-//        bn = new BayesNet();
-//        transferLearningWeight = new String("ratio");
-//        targetFinalModelName=startNetworkName.replace(".bif","")+"-"+targetDataName.replace(".arff", "")
-//                + "-"+ transferLearningApproach + "-" + transferLearningWeight + ".bif";
-//        bn.setSearchAlgorithm(new BNTL(configFileName,transferLearningApproach,transferLearningWeight, startNetworkName,
-//                trueKL,trueBFWeightTable, avgKL,avgBFWeightTable));
-//        bn.buildClassifier(instances);
-//        printOnePerformance(targetModelLoc,targetFinalModelName, targetDataLoc+targetTestDataName);
-//
-//
-//        // 5. trueBayesFactor
-//        bn = new BayesNet();
-//        transferLearningWeight = new String("trueBayesFactor");
-//        targetFinalModelName=startNetworkName.replace(".bif","")+"-"+targetDataName.replace(".arff", "")
-//                + "-"+ transferLearningApproach + "-" + transferLearningWeight + ".bif";
-//        bn.setSearchAlgorithm(new BNTL(configFileName,transferLearningApproach,transferLearningWeight, startNetworkName,
-//                trueKL,trueBFWeightTable, avgKL,avgBFWeightTable));
-//        bn.buildClassifier(instances);
-//        printOnePerformance(targetModelLoc,targetFinalModelName, targetDataLoc+targetTestDataName);
 
 
-//-----------------------------------------------------------------------------------------------------------//
-
-
-//    public static List<File> GetFolder(String configLoc ){
-//        File directory = new File(configLoc);
-//        File [] files = directory.listFiles();
-//        List<File> config = new ArrayList<>();
-//        for(File f: files){
-//            if(f.isFile() && f.getName().endsWith(".txt")){
-//                config.add(f);
-//                //System.out.println(f);
-//            }
-//        }
-//        return config;
-//    }
 
 
     //=======================================================================================================//
@@ -925,147 +772,7 @@ public class runnerBNTL {
      * core code for transferm learning
      */
 
-    //new BNTL(configFileName,"priorModelApproach", "KL_targetData_trueSourceModel",
-    // "acmodel_0810_topazac.bif", trueKL, avgKL,avgBFWeightTable);
 
-
-    // same structure but different parameters.
-
-    // load multiple models into list
-    // In readNetwork() ---> modify path for multi-source models-------|
-    //ArrayList<SMILEBayesNet>  netWorkList = readNetwork();     //------|
-    //-----------------------------------------------------------------|
-//
-//            bn.setSearchAlgorithm(new BNTL_TEST_MODIFY(configFileName,transferLearningApproach,transferLearningWeight, startNetworkName,
-//                  trueKL,learnedSource_nodeKLTable, avgKL,avgBFWeightTable,netWorkList));
-//=======================================================================================================//
-
-
-
-
-    // 跑实验的路径2
-    //String folderExperimentLoc = "./000.experiment_SLC2AC/";
-    //String fileName ="FLU-SLC2AC-0809-transfer20090118-IG001-NB";
-
-    //    public static void setConfig() throws FileNotFoundException{
-//        sourceModelLoc=Utility.getConfig("sourceModelLoc",configFileName);
-//
-//        sourceTrueModelName=Utility.getConfig("sourceTrueModelName",configFileName);
-//        sourceCleanInjectModelXML=Utility.getConfig("sourceCleanInjectModelXML",configFileName);
-//
-//        // multiple version to get list of network
-//        // use [1.xdsl, 2.xdsl, 3.xdsl....]
-//        // add by John Song for multi-version
-//        String temp =Utility.getConfig("sourceCleanInjectModelXDSL",configFileName);
-//        String [] temp1 = temp.split(",");
-//        sourceClearnInjectModelXDSL= new ArrayList<>();
-//        for(String a: temp1){
-//            sourceClearnInjectModelXDSL.add(a);
-//        }
-//
-//
-//        sourceSimulateDataLoc=Utility.getConfig("sourceSimulateDataLoc",configFileName);
-//        sourceSimulateDataName=Utility.getConfig("sourceSimulateDataName",configFileName);
-//        sourceDataLoc=Utility.getConfig("sourceDataLoc",configFileName);
-//        sourceDataName=Utility.getConfig("sourceDataName",configFileName);
-//        sourceDataSize=Utility.getConfig("sourceDataSize",configFileName);
-//        targetModelLoc=Utility.getConfig("targetModelLoc",configFileName);
-//        targetTrueModelName=Utility.getConfig("targetTrueModelName",configFileName);
-//
-//
-//        targetDataLoc=Utility.getConfig("targetDataLoc",configFileName);
-//        targetDataName=Utility.getConfig("targetDataName",configFileName);
-//        targetNodeName=Utility.getConfig("targetNodeName",configFileName);
-//
-//        targetTestDataName=Utility.getConfig("targetTestDataName",configFileName);
-//
-//
-//        resultLoc=Utility.getConfig("resultLoc",configFileName);
-//        resultProbName=Utility.getConfig("resultProbName",configFileName);
-//        resultAUCName=Utility.getConfig("resultAUCName",configFileName);
-//        resultCalibrationName=Utility.getConfig("resultCalibrationName",configFileName);
-//
-//
-//        utilityLoc=Utility.getConfig("utilityLoc",configFileName);
-//        temporaryFileName=Utility.getConfig("temporaryFileName",configFileName);
-//        hashCodeName=Utility.getConfig("hashCodeName",configFileName);
-//
-//        logLoc=Utility.getConfig("logLoc",configFileName);
-//        logName=Utility.getConfig("logName",configFileName);
-//        targetClassName = Utility.getConfig("targetClassName",configFileName);
-//
-//        // targetClassname = ""
-//        if (targetClassName==null){
-//            targetClassName = new String("class");
-//        }
-//
-//
-//
-//        featureSelectionApproach = Utility.getConfig("featureSelectionApproach",configFileName);
-//
-//        modelLearningApproach = Utility.getConfig("modelLearningApproach",configFileName);
-//
-//
-//        sourceLearnedModelName=sourceDataName.replace(".arff", "-" + featureSelectionApproach + "-" + modelLearningApproach + ".bif");
-//        targetLearnedModelName=targetDataName.replace(".arff", "-" + featureSelectionApproach + "-" + modelLearningApproach + ".bif");
-//        sourceLearnedCleanedModelName = sourceLearnedModelName.replace(".bif", "")+"_cleaned.bif";
-//        sourceTrueCleanedModelName = sourceTrueModelName.replace(".bif", "")+"_cleaned.bif";
-//
-//
-//        // add if(){} statement to avoid calculation -- John Song
-//        if(modelLearningApproach.equals("K2")){
-//
-//            trueKL = Double.parseDouble(Utility.getConfig("trueKL",configFileName));
-//
-//
-//            String trueBFString = Utility.getConfig("trueBFTable",configFileName);
-//            String[] bfPairs = trueBFString.split(";");
-//            trueBFWeightTable = new HashMap<String,Double> ();
-//            for (int i=0; i<bfPairs.length; i++){
-//                String onePair = bfPairs[i];
-//                if (onePair.length()>0 && onePair.contains(",")){
-//                    String[] values = onePair.split(",");
-//                    String nodeName = values[0];
-//                    Double bf = Double.parseDouble(values[1]);
-//                    if (bf <=0.000000001) { bf = 0.000000001; }
-//                    trueBFWeightTable.put(nodeName, bf);
-//                }
-//            }
-//
-//            KL_targetData_learnedSourceModel = Double.parseDouble(Utility.getConfig("KL_targetData_learnedSourceModel",configFileName));
-//            KL_targetData_trueSourceModel = Double.parseDouble(Utility.getConfig("KL_targetData_trueSourceModel",configFileName));
-//
-//            String learnedSource_nodeKLTableString = Utility.getConfig("nodeKLTable_targetData_learnedSourceModel",configFileName);
-//            String trueSource_nodeKLTableString = Utility.getConfig("nodeKLTable_targetData_trueSourceModel",configFileName);
-//
-//            learnedSource_nodeKLTable =  new HashMap<String,Double>() ;
-//            String[] klPairs = learnedSource_nodeKLTableString.split(";");
-//            for (int i=0; i<klPairs.length; i++){
-//                String onePair = klPairs[i];
-//                if (onePair.length()>0 && onePair.contains(",")){
-//                    String[] values = onePair.split(",");
-//                    String nodeName = values[0];
-//                    Double kl = Double.parseDouble(values[1]);
-//                    learnedSource_nodeKLTable.put(nodeName, kl);
-//                }
-//            }
-//
-//            trueSource_nodeKLTable =  new HashMap<String,Double>() ;
-//            klPairs = trueSource_nodeKLTableString.split(";");
-//            for (int i=0; i<klPairs.length; i++){
-//                String onePair = klPairs[i];
-//                if (onePair.length()>0 && onePair.contains(",")){
-//                    String[] values = onePair.split(",");
-//                    String nodeName = values[0];
-//                    Double kl = Double.parseDouble(values[1]);
-//                    trueSource_nodeKLTable.put(nodeName, kl);
-//                }
-//            }
-//        }
-//
-//
-//
-//    }
 
 
 

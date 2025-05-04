@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <smile version="1.0" id="./config_data_result/sourceModel/acmodel_0810_topazac_seed620128888_size8000-IG-K2.bif">
+	<nodes>
+	<cpt id="diagnosis">
+		<state id="O" />
+		<state id="N" />
+		<state id="I" />
+		<probabilities>0.927902036736224 0.06772460327377233 0.0043733599900037485 </probabilities>
+	</cpt>
+<cpt id="nasal_swab_order">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.001884760366182014 6.731287022078621E-4 0.9974421109316102 0.34191176470588236 0.011029411764705883 0.6470588235294118 0.43243243243243246 0.02702702702702703 0.5405405405405406 </probabilities>
+	</cpt>
+<cpt id="unspecified_cough">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.08441033925686592 0.2284598815293484 0.6871297792137857 0.5845588235294118 0.20955882352941177 0.20588235294117646 0.6486486486486487 0.13513513513513514 0.21621621621621623 </probabilities>
+	</cpt>
+<cpt id="reported_fever">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.16222401723209479 0.49771136241249325 0.34006462035541196 0.6066176470588235 0.2922794117647059 0.10110294117647059 0.7297297297297297 0.13513513513513514 0.13513513513513514 </probabilities>
+	</cpt>
+<cpt id="hypoxemia">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.00942380183091007 0.08992999461497038 0.9006462035541195 0.10110294117647059 0.2113970588235294 0.6875 0.08108108108108109 0.35135135135135137 0.5675675675675675 </probabilities>
+	</cpt>
+<cpt id="influenza_lab_positive">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>8.077544426494346E-4 1.3462574044157243E-4 0.999057619816909 0.02022058823529412 0.003676470588235294 0.9761029411764706 0.24324324324324326 0.02702702702702703 0.7297297297297297 </probabilities>
+	</cpt>
+<cpt id="age_group">
+		<state id="ls6" />
+		<state id="ge6ls65" />
+		<state id="ge65" />
+		<parents>diagnosis</parents>
+		<probabilities>0.06825525040387723 0.7334410339256866 0.1983037156704362 0.125 0.8051470588235294 0.06985294117647059 0.05405405405405406 0.6486486486486487 0.2972972972972973 </probabilities>
+	</cpt>
+<cpt id="rsv_lab_ordered">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.049629454076005164 0.0024809727093001977 0.9478895732146946 0.049629454076005164 0.0024809727093001977 0.9478895732146946 0.049629454076005164 0.0024809727093001977 0.9478895732146946 </probabilities>
+	</cpt>
+<cpt id="respiratory_distress">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.07196287851514059 0.23080923236929476 0.6972278891155647 0.07196287851514059 0.23080923236929476 0.6972278891155647 0.07196287851514059 0.23080923236929476 0.6972278891155647 </probabilities>
+	</cpt>
+<cpt id="respiratory_panel_ordered">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.027300518709855493 0.0024810471398956585 0.9702184341502489 0.027300518709855493 0.0024810471398956585 0.9702184341502489 0.027300518709855493 0.0024810471398956585 0.9702184341502489 </probabilities>
+	</cpt>
+<cpt id="tachypnea">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.044671340140204206 0.8437253117593527 0.11160334810044302 0.044671340140204206 0.8437253117593527 0.11160334810044302 0.044671340140204206 0.8437253117593527 0.11160334810044302 </probabilities>
+	</cpt>
+<cpt id="highest_measured_temperature">
+		<state id="P" />
+		<state id="A" />
+		<state id="I" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.007425955444267335 0.08167950992294047 0.7895952624284255 0.12129927220436679 0.007425955444267335 0.08167950992294047 0.7895952624284255 0.12129927220436679 0.007425955444267335 0.08167950992294047 0.7895952624284255 0.12129927220436679 </probabilities>
+	</cpt>
+<cpt id="apnea">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.004962965259243186 0.0074439478923647535 0.9875930868483921 0.004962965259243186 0.0074439478923647535 0.9875930868483921 0.004962965259243186 0.0074439478923647535 0.9875930868483921 </probabilities>
+	</cpt>
+<cpt id="infiltrate">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.012409751804963901 0.024809503809923802 0.9627807443851124 0.012409751804963901 0.024809503809923802 0.9627807443851124 0.012409751804963901 0.024809503809923802 0.9627807443851124 </probabilities>
+	</cpt>
+	</nodes>
+	<extensions>
+	 <genie version="1.0" app="GeNIe 2.0.2603.0" name="Flu" faultnameformat="nodestate">
+		<node id="nasal_swab_order">
+			<name>nasal_swab_order</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="unspecified_cough">
+			<name>unspecified_cough</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="reported_fever">
+			<name>reported_fever</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="hypoxemia">
+			<name>hypoxemia</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="influenza_lab_positive">
+			<name>influenza_lab_positive</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="age_group">
+			<name>age_group</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="diagnosis">
+			<name>diagnosis</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="rsv_lab_ordered">
+			<name>rsv_lab_ordered</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="respiratory_distress">
+			<name>respiratory_distress</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="respiratory_panel_ordered">
+			<name>respiratory_panel_ordered</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="tachypnea">
+			<name>tachypnea</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="highest_measured_temperature">
+			<name>highest_measured_temperature</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="apnea">
+			<name>apnea</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="infiltrate">
+			<name>infiltrate</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+	 </genie>
+	</extensions>
+</smile>

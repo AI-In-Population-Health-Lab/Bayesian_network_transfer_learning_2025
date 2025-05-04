@@ -18,8 +18,8 @@ This project created the Bayesian Network Transfer Learning (BN-TL) algorithm to
 
 ## 2.1.1 CLI - Quick Start
 1. `cd BNTL current direcotry`  
-2. `java -jar BNTL_MultiSource.jar` ==> this will show the brief instruction of the project.  
-3. `java -Djava.library.path=./lib -jar BNTL_MultiSource.jar ./smile_license/License.java ./no_KL FLU-SLC2AC-0809-transfer20090118-IG001-NB unadjust ratio off`  
+2. `java -jar Bayesian_network_transfer_learning_2025.jar` ==> this will show the brief instruction of the project.  
+3. `java -Djava.library.path=./lib -jar Bayesian_network_transfer_learning_2025.jar ./smile_license/License.java ./config_data_result simulation-data unadjust ratio off`  
 
 
 ## 2.1.2 IntelliJ IDEA  

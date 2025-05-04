@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <smile version="1.0" id="./config_data_result/sourceModel/another_model.bif">
+	<nodes>
+	<cpt id="diagnosis">
+		<state id="O" />
+		<state id="N" />
+		<state id="I" />
+		<probabilities>0.928 0.068 0.004 </probabilities>
+	</cpt>
+<cpt id="nasal_swab_order">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.001 0.002 0.997 0.34 0.01 0.65 0.43 0.03 0.54 </probabilities>
+	</cpt>
+<cpt id="unspecified_cough">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.084 0.228 0.688 0.5840000000000001 0.21000000000000002 0.20600000000000002 0.649 0.135 0.216 </probabilities>
+	</cpt>
+<cpt id="reported_fever">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.162 0.498 0.34 0.607 0.292 0.101 0.73 0.135 0.135 </probabilities>
+	</cpt>
+<cpt id="hypoxemia">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.009 0.09 0.901 0.101 0.211 0.688 0.081 0.351 0.568 </probabilities>
+	</cpt>
+<cpt id="influenza_lab_positive">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>5.0E-4 5.0E-4 0.999 0.02 0.004 0.976 0.243 0.027 0.73 </probabilities>
+	</cpt>
+<cpt id="age_group">
+		<state id="ls6" />
+		<state id="ge6ls65" />
+		<state id="ge65" />
+		<parents>diagnosis</parents>
+		<probabilities>0.068 0.734 0.198 0.125 0.805 0.07 0.054 0.649 0.297 </probabilities>
+	</cpt>
+<cpt id="rsv_lab_ordered">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.05 0.002 0.948 0.05 0.002 0.948 0.05 0.002 0.948 </probabilities>
+	</cpt>
+<cpt id="respiratory_distress">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.072 0.231 0.697 0.072 0.231 0.697 0.072 0.231 0.697 </probabilities>
+	</cpt>
+<cpt id="respiratory_panel_ordered">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.027 0.002 0.971 0.027 0.002 0.971 0.027 0.002 0.971 </probabilities>
+	</cpt>
+<cpt id="tachypnea">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.045 0.843 0.112 0.045 0.843 0.112 0.045 0.843 0.112 </probabilities>
+	</cpt>
+<cpt id="highest_measured_temperature">
+		<state id="P" />
+		<state id="A" />
+		<state id="I" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.007 0.082 0.79 0.121 0.007 0.082 0.79 0.121 0.007 0.082 0.79 0.121 </probabilities>
+	</cpt>
+<cpt id="apnea">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.005 0.007 0.988 0.005 0.007 0.988 0.005 0.007 0.988 </probabilities>
+	</cpt>
+<cpt id="infiltrate">
+		<state id="P" />
+		<state id="A" />
+		<state id="M" />
+		<parents>diagnosis</parents>
+		<probabilities>0.012 0.025 0.963 0.012 0.025 0.963 0.012 0.025 0.963 </probabilities>
+	</cpt>
+	</nodes>
+	<extensions>
+	 <genie version="1.0" app="GeNIe 2.0.2603.0" name="Flu" faultnameformat="nodestate">
+		<node id="nasal_swab_order">
+			<name>nasal_swab_order</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="unspecified_cough">
+			<name>unspecified_cough</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="reported_fever">
+			<name>reported_fever</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="hypoxemia">
+			<name>hypoxemia</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="influenza_lab_positive">
+			<name>influenza_lab_positive</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="age_group">
+			<name>age_group</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="diagnosis">
+			<name>diagnosis</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="rsv_lab_ordered">
+			<name>rsv_lab_ordered</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="respiratory_distress">
+			<name>respiratory_distress</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="respiratory_panel_ordered">
+			<name>respiratory_panel_ordered</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="tachypnea">
+			<name>tachypnea</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="highest_measured_temperature">
+			<name>highest_measured_temperature</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="apnea">
+			<name>apnea</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+		<node id="infiltrate">
+			<name>infiltrate</name>
+			<interior color="e5f6f7" />
+			<outline color="000080" />
+			<font color="000000" name="Arial" size="8" />
+			<position>225 489 297 540</position>
+		</node>
+	 </genie>
+	</extensions>
+</smile>
