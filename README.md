@@ -1,4 +1,4 @@
-# BNTL_Multi-Sources 
+# Bayeisan network transfer learning package 2025 version
 # 1. Introduction 
 
 The goal of this project is to increase the re-use of computable biomedical knowledge in probabilistic formalisms.   
@@ -6,7 +6,8 @@ In the field of transfer learning, which is a sub-area of machine learning, thes
 
 This project created the Bayesian Network Transfer Learning (BN-TL) algorithm to re-use of source model, such as  influenza,  learned from electronic medical record (EMR) data to predict the target data set. (for more info see: *Transfer Learning For Bayesian Case Detection Systems*)
 
-
+If using this package, please cite this dissertation [Ye, Y., 2019. Transfer learning for Bayesian case detection systems (Doctoral dissertation, University of Pittsburgh.](https://d-scholarship.pitt.edu/35684/)
+If having question, contact Dr. Ye Ye through yeyewy@gmail.com
 
 # 2. Quick Start  
 *If you have not install JAVA JDK 18 or 1.8 yet, please install first*  
@@ -55,53 +56,7 @@ This project created the Bayesian Network Transfer Learning (BN-TL) algorithm to
 
 ### 3.1.2 parameters for configurationFile.txt
 
-```
 
------Source Part-----
-sourceDataLoc=
-sourceModelLoc=
-sourceDataName=source_data.arff
-sourceLearnedModelName= 1.bif,2.bif,...
-sourceDataSize=1661,1661....
------Target Part-----
-targetNodeName=diagnosis
-targetTrainDataSize=21
-targetTestDataName=test_data.arff
-targetTestDataSize=344
-targetModelLoc=path--->targetModel/
-targetDataName=train_data.arff
-targetDataLoc=path-->targetData/
--------feature-------
-modelLearningApproach=NB
-featureSelectionApproach=IG001
-
--------Path------
-temporaryFileName=temp.xml
-experimentFileLoc= path to folder
-utilityLoc=path-->/utility/
-resultProbName=prob.csv
-resultAUCName=auc.csv
-logName=configuration_file.txt
-resultLoc=path--->result/
-logLoc=path-->log/
-hashCodeName=hashCode.xml
-
-
-------------KL----------(if you want to perform KL section)
-
-trueKL=1.8224292702088067  
-
-trueBFTable=hypoxemia,1.0E-9;reported_fever,1.0E-9;influenza_lab_positive,1.0E-9;age_group,1.0E-9;diagnosis,1.0E-9;unspecified_cough,3.2417270528642096E-6;nasal_swab_order,1.0E-9;   
-
-KL_targetData_learnedSourceModel=1.2568181979662876  
-
-nodeKLTable_targetData_learnedSourceModel=diagnosis,0.0045124560875614075;unspecified_cough,0.09813077790883455;reported_fever,0.4261776773290663;age_group,0.01770522273709965;hypoxemia,0.47951291320078326;nasal_swab_order,0.114442540587127;  
-
-KL_targetData_trueSourceModel=1.660745666413443  
-
-nodeKLTable_targetData_trueSourceModel=diagnosis,0.03595232239858527;age_group,0.0281376732895748;nasal_swab_order,0.05359926700974576;unspecified_cough,0.019446531674810627;reported_fever,0.4892853435516517;influenza_lab_positive,0.09896658196551227;hypoxemia,0.8059805217479895;  
-
-```  
 
 - run unadjust & ratio performance, you need to have Source Part, Target Part, Feature Part, and Path part.
 - Run KL options, you need to have KL Part that includes in configuration file. 
