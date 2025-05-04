@@ -6,7 +6,7 @@ In the field of transfer learning, which is a sub-area of machine learning, thes
 
 This project created the Bayesian Network Transfer Learning (BN-TL) algorithm to re-use of source model, such as  influenza,  learned from electronic medical record (EMR) data to predict the target data set. (for more info see: *Transfer Learning For Bayesian Case Detection Systems*)
 
-If using this package, please cite this dissertation [Ye, Y., 2019. Transfer learning for Bayesian case detection systems (Doctoral dissertation, University of Pittsburgh.](https://d-scholarship.pitt.edu/35684/)
+If using this package, please cite this dissertation [Ye, Ye. Transfer learning for Bayesian case detection systems. Doctoral dissertation, University of Pittsburgh. 2019.](https://d-scholarship.pitt.edu/35684/)
 If having question, contact Dr. Ye Ye through yeyewy@gmail.com
 
 # 2. Quick Start  
